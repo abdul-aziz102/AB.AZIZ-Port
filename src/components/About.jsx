@@ -1,108 +1,244 @@
-import { useEffect, useRef } from 'react';
-import { FiDownload, FiMail, FiMapPin } from 'react-icons/fi';
+import { FiMail, FiMapPin, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi';
+import { FaReact, FaNodeJs, FaDatabase } from 'react-icons/fa';
+import { SiTailwindcss, SiMongodb, SiTypescript } from 'react-icons/si';
+import { motion } from 'framer-motion';
 
 const AboutPage = () => {
-  const aboutRef = useRef(null);
-  
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (aboutRef.current) {
-        const { left, top, width, height } = aboutRef.current.getBoundingClientRect();
-        const x = (e.clientX - left) / width;
-        const y = (e.clientY - top) / height;
-        
-        aboutRef.current.style.setProperty('--mouse-x', x);
-        aboutRef.current.style.setProperty('--mouse-y', y);
-      }
-    };
+  const techStack = [
+    { name: 'React', icon: <FaReact className="text-blue-400" />, level: 90 },
+    { name: 'Node.js', icon: <FaNodeJs className="text-green-500" />, level: 85 },
+    { name: 'MongoDB', icon: <SiMongodb className="text-green-600" />, level: 75 },
+    { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-cyan-400" />, level: 95 },
+    { name: 'Database', icon: <FaDatabase className="text-blue-500" />, level: 85 },
+  ];
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
 
   return (
-    <div 
-      ref={aboutRef}
-      className="relative overflow-hidden w-full min-h-screen border border-gray-800 bg-gray-900 p-8 md:p-12"
-      style={{
-        '--mouse-x': 0.5,
-        '--mouse-y': 0.5,
-      }}
-    >
-      {/* Animated gradient background - identical to banner */}
-      <div className="absolute inset-0 opacity-70">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_calc(var(--mouse-x)*100%)_calc(var(--mouse-y)*100%),rgba(99,102,241,0.3),transparent_70%)] transition-all duration-300"></div>
-        <div className="absolute inset-0 bg-[conic-gradient(from_90deg_at_80%_50%,#0ea5e9,#6366f1,#a855f7,#0ea5e9)] opacity-10 animate-spin-slow [animation-duration:10s]"></div>
-      </div>
-      
-      {/* Decorative elements - identical to banner */}
-      <div className="absolute right-10 bottom-10 w-24 h-24 rounded-full bg-purple-500/20 blur-xl"></div>
-      <div className="absolute left-20 top-20 w-16 h-16 rounded-full bg-blue-500/20 blur-xl"></div>
-      
-      {/* Grid pattern - identical to banner */}
-      <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-      </div>
-      
-      {/* About content */}
-      <div className="relative z-10 max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 items-center">
-        {/* Profile image section */}
-        <div className="w-full lg:w-1/3 flex justify-center">
-          <div className="relative group">
-            <div className="w-64 h-64 md:w-80 md:h-80 rounded-full border-4 border-blue-400/30 overflow-hidden">
-              <div className="w-full h-full bg-gray-700/50 flex items-center justify-center text-gray-400">
-                <img src="az.jpg" alt="" />
+    <div className="w-full min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-6 py-12" id="about">
+      <div className="max-w-6xl mt-14 mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col lg:flex-row gap-12 items-center"
+        >
+          {/* Profile Image */}
+          <div className="w-full lg:w-1/3 flex justify-center relative">
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              className="relative group w-64 h-64 md:w-80 md:h-80"
+            >
+              <div className="absolute inset-0 rounded-full border-4 border-blue-500/30 overflow-hidden shadow-xl">
+                <img
+                  src="az.jpg"
+                  alt="Profile"
+                  className="w-full h-full object-cover rounded-full"
+                />
               </div>
-            </div>
-            <div className="absolute inset-0 rounded-full border-4 border-transparent group-hover:border-blue-400/50 transition-all duration-500 pointer-events-none"></div>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-transparent group-hover:border-blue-400/50 transition-all duration-500 pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+              <div className="absolute -inset-4 rounded-full bg-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            </motion.div>
           </div>
-        </div>
-        
-        {/* About text section */}
-        <div className="w-full lg:w-2/3">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-            <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              About Me
+
+          {/* About Content */}
+          <div className="w-full lg:w-2/3">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+                About Me
+              </span>
+            </h1>
+
+            <motion.h2 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-6"
+            >
+              Full Stack Developer & UI/UX Designer
+            </motion.h2>
+
+            <motion.div
+              variants={container}
+              initial="hidden"
+              animate="visible"
+              className="space-y-4 mb-6"
+            >
+              <motion.p variants={item} className="text-lg text-gray-700 dark:text-gray-300">
+                I'm a passionate developer with expertise in building modern web applications. I specialize in creating seamless, responsive, and user-friendly experiences across the entire stack.
+              </motion.p>
+              <motion.p variants={item} className="text-lg text-gray-700 dark:text-gray-300">
+                With 3+ years of experience, I've delivered production-ready solutions using React, Node.js, MongoDB, and Tailwind CSS. I prioritize clean, maintainable code and intuitive user interfaces.
+              </motion.p>
+              <motion.p variants={item} className="text-lg text-gray-700 dark:text-gray-300">
+                When I'm not coding, I contribute to open-source projects, mentor junior developers, and continuously expand my skills through online courses and tech communities.
+              </motion.p>
+            </motion.div>
+
+            {/* Tech Stack */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="mb-8"
+            >
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+                My Tech Stack
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                {techStack.map((tech, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div className="text-xl">
+                      {tech.icon}
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-800 dark:text-gray-200">{tech.name}</div>
+                      <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-1.5">
+                        <div 
+                          className="h-1.5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
+                          style={{ width: `${tech.level}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Contact Info */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8"
+            >
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full mr-3">
+                  <FiMail className="text-blue-500" />
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Email</div>
+                  <div className="text-gray-700 dark:text-gray-300">your.email@example.com</div>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full mr-3">
+                  <FiMapPin className="text-blue-500" />
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Location</div>
+                  <div className="text-gray-700 dark:text-gray-300">San Francisco, CA</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+              className="flex gap-4"
+            >
+              <a 
+                href="https://github.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              >
+                <FiGithub className="text-gray-700 dark:text-gray-300" />
+              </a>
+              <a 
+                href="https://linkedin.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              >
+                <FiLinkedin className="text-gray-700 dark:text-gray-300" />
+              </a>
+              <a 
+                href="https://twitter.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              >
+                <FiTwitter className="text-gray-700 dark:text-gray-300" />
+              </a>
+              <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:shadow-lg transition-all transform hover:-translate-y-1">
+                Contact Me
+              </button>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Experience Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4 }}
+          className="mt-20"
+        >
+          <h2 className="text-3xl font-bold mb-8 text-center">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+              My Experience
             </span>
-          </h1>
-          
-          <h2 className="text-xl md:text-2xl font-medium text-gray-300 mb-6">
-            Full Stack Developer & UI/UX Designer
           </h2>
           
-          <div className="prose prose-invert max-w-none text-gray-300 mb-8">
-            <p className="text-lg mb-4">
-              I'm a passionate developer with expertise in building modern web applications. With experience in both frontend and backend development, I create seamless, responsive, and user-friendly digital experiences.
-            </p>
-            <p className="text-lg mb-4">
-              My journey in web development began 5 years ago, and since then I've worked with various technologies including React, Node.js, MongoDB, and Tailwind CSS. I specialize in creating performant applications with clean, maintainable code.
-            </p>
-            <p className="text-lg">
-              When I'm not coding, you can find me contributing to open-source projects, learning new technologies, or sharing my knowledge with the developer community.
-            </p>
-          </div>
-          
-          {/* Personal info */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-            <div className="flex items-center">
-              <FiMail className="text-blue-400 mr-3 text-xl" />
-              <span className="text-gray-300">your.email@example.com</span>
+          <div className="relative">
+            {/* Timeline bar */}
+            <div className="absolute left-4 md:left-1/2 h-full w-1 bg-gray-300 dark:bg-gray-700 transform -translate-x-1/2"></div>
+            
+            <div className="space-y-8">
+              {/* Timeline item 1 */}
+              <div className="relative pl-12 md:pl-0 md:flex justify-center">
+                <div className="md:w-5/12 md:pr-8 md:text-right">
+                  <div className="text-sm text-gray-500 dark:text-gray-400">2022 - Present</div>
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Senior Full Stack Developer</h3>
+                  <p className="text-gray-600 dark:text-gray-300">Tech Solutions Inc.</p>
+                </div>
+                <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"></div>
+                <div className="md:w-5/12 md:pl-8 mt-4 md:mt-0">
+                  <p className="text-gray-700 dark:text-gray-300">
+                    Led a team of developers to build scalable web applications. Implemented CI/CD pipelines and improved performance by 40%.
+                  </p>
+                </div>
+              </div>
+
+              {/* Timeline item 2 */}
+              <div className="relative pl-12 md:pl-0 md:flex justify-center">
+                <div className="md:w-5/12 md:pr-8 md:text-right">
+                  <div className="text-sm text-gray-500 dark:text-gray-400">2020 - 2022</div>
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Frontend Developer</h3>
+                  <p className="text-gray-600 dark:text-gray-300">Digital Creations</p>
+                </div>
+                <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-purple-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"></div>
+                <div className="md:w-5/12 md:pl-8 mt-4 md:mt-0">
+                  <p className="text-gray-700 dark:text-gray-300">
+                    Developed responsive user interfaces and collaborated with designers to implement pixel-perfect UIs.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center">
-              <FiMapPin className="text-blue-400 mr-3 text-xl" />
-              <span className="text-gray-300">San Francisco, CA</span>
-            </div>
           </div>
-          
-          {/* Action buttons */}
-          <div className="flex flex-wrap gap-4">
-          
-            <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-1 flex items-center">
-              <FiMail className="mr-2" /> Contact Me
-            </button>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

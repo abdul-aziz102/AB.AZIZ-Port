@@ -1,12 +1,10 @@
 import React from 'react'
 import SkillsComponent from '../components/Skill'
 
-const Skillpage = () => {
+export const Skills = () => {
   return (
-    <>
-    <SkillsComponent/>
-    </>
+    <div>
+        <SkillsComponent />
+    </div>
   )
 }
-
-export default Skillpage
