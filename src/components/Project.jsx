@@ -34,7 +34,7 @@ const ProjectsPage = () => {
       title: "English Learning Website",
       description: "A modern educational site where students can log in to read English stories, poems, news, and articles. Includes search functionality and a responsive design.",
       tags: ["React", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
-      github: "#",
+      
       live: "https://guileless-sfogliatella-ac168a.netlify.app/",
       image: "/english .png"
     },
@@ -43,11 +43,28 @@ const ProjectsPage = () => {
       title: "E-commerce Website",
       description: "A responsive e-commerce website built using React, Tailwind CSS, Node.js, Express.js, and MongoDB. Features user authentication, product management, and payment integration.",
       tags: ["React", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
-      github: "#",
-      live: "https://zesty-sfogliatella-e5c6e3.netlify.app/",
-      image: "/shopweb.png"
+     
+      live: "https://clothes-shop-zeta.vercel.app/",
+      image: "/cloth.png"
     },
-   
+     {
+      id: 5,
+      title: "Company Portfolio",
+      description: "A responsive company portfolio website built using React, Tailwind CSS, Node.js, Express.js, and MongoDB. Features user authentication, project management, and a contact form.",
+      tags: ["React", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
+      
+      live: "https://company-portfolio-pxdb.vercel.app/",
+      image: "/pic.png"
+    },
+      {
+      id: 5,
+      title: "Home Academy",
+      description: "A responsive online learning platform built using React, Tailwind CSS, Node.js, Express.js, and MongoDB. Features user authentication, course management, and a contact form.",
+      tags: ["React", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
+      
+      live: "https://home-academy-pi.vercel.app/",
+      image: "home.png"
+    },
   ];
 
   return (
@@ -90,14 +107,7 @@ const ProjectsPage = () => {
 
                 {/* Buttons */}
                 <div className="flex gap-4 text-sm">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 text-blue-500 hover:underline"
-                  >
-                    <FiGithub /> Code
-                  </a>
+                
                   <a
                     href={project.live}
                     target="_blank"

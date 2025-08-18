@@ -194,19 +194,19 @@ const Footer = () => {
       </div>
 
       {/* Scroll to Top Button */}
-      {showScroll && (
-        <motion.button
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <FiArrowUp className="text-xl" />
-        </motion.button>
-      )}
+    {showScroll && (
+  <motion.button
+    onClick={scrollToTop}
+    className="fixed bottom-8  z-50 p-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg flex items-center justify-center"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: 20 }}
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.9 }}
+  >
+    <FiArrowUp className="text-xl" />
+  </motion.button>
+)}
     </footer>
   );
 };

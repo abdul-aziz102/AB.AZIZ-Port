@@ -1,9 +1,34 @@
-import { FiMail, FiMapPin, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi';
+import { useState, useEffect } from 'react';
+import { FiMail, FiMapPin, FiGithub, FiLinkedin, FiTwitter, FiArrowUp } from 'react-icons/fi';
 import { FaReact, FaNodeJs, FaDatabase } from 'react-icons/fa';
-import { SiTailwindcss, SiMongodb, SiTypescript } from 'react-icons/si';
+import { SiTailwindcss, SiMongodb } from 'react-icons/si';
 import { motion } from 'framer-motion';
 
 const AboutPage = () => {
+  // Scroll to top functionality
+  const [showScroll, setShowScroll] = useState(false);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (window.pageYOffset > 300) {
+        setShowScroll(true);
+      } else {
+        setShowScroll(false);
+      }
+    };
+
+    window.addEventListener('scroll', checkScroll);
+    return () => window.removeEventListener('scroll', checkScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  // Tech stack data
   const techStack = [
     { name: 'React', icon: <FaReact className="text-blue-400" />, level: 90 },
     { name: 'Node.js', icon: <FaNodeJs className="text-green-500" />, level: 85 },
@@ -12,6 +37,7 @@ const AboutPage = () => {
     { name: 'Database', icon: <FaDatabase className="text-blue-500" />, level: 85 },
   ];
 
+  // Animation variants
   const container = {
     hidden: { opacity: 0 },
     visible: {
@@ -87,7 +113,7 @@ const AboutPage = () => {
                 I'm a passionate developer with expertise in building modern web applications. I specialize in creating seamless, responsive, and user-friendly experiences across the entire stack.
               </motion.p>
               <motion.p variants={item} className="text-lg text-gray-700 dark:text-gray-300">
-                With 3+ years of experience, I've delivered production-ready solutions using React, Node.js, MongoDB, and Tailwind CSS. I prioritize clean, maintainable code and intuitive user interfaces.
+                With 1+ year of experience, I've delivered production-ready solutions using React, Node.js, MongoDB, and Tailwind CSS. I prioritize clean, maintainable code and intuitive user interfaces.
               </motion.p>
               <motion.p variants={item} className="text-lg text-gray-700 dark:text-gray-300">
                 When I'm not coding, I contribute to open-source projects, mentor junior developers, and continuously expand my skills through online courses and tech communities.
@@ -210,14 +236,14 @@ const AboutPage = () => {
               {/* Timeline item 1 */}
               <div className="relative pl-12 md:pl-0 md:flex justify-center">
                 <div className="md:w-5/12 md:pr-8 md:text-right">
-                  <div className="text-sm text-gray-500 dark:text-gray-400">2022 - Present</div>
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Senior Full Stack Developer</h3>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">2023 - Present</div>
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Full Stack Developer</h3>
                   <p className="text-gray-600 dark:text-gray-300">Tech Solutions Inc.</p>
                 </div>
                 <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"></div>
                 <div className="md:w-5/12 md:pl-8 mt-4 md:mt-0">
                   <p className="text-gray-700 dark:text-gray-300">
-                    Led a team of developers to build scalable web applications. Implemented CI/CD pipelines and improved performance by 40%.
+                    Build scalable web applications with modern frameworks. Implemented CI/CD pipelines and optimized performance.
                   </p>
                 </div>
               </div>
@@ -225,14 +251,14 @@ const AboutPage = () => {
               {/* Timeline item 2 */}
               <div className="relative pl-12 md:pl-0 md:flex justify-center">
                 <div className="md:w-5/12 md:pr-8 md:text-right">
-                  <div className="text-sm text-gray-500 dark:text-gray-400">2020 - 2022</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">2021 - 2023</div>
                   <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Frontend Developer</h3>
                   <p className="text-gray-600 dark:text-gray-300">Digital Creations</p>
                 </div>
                 <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-purple-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"></div>
                 <div className="md:w-5/12 md:pl-8 mt-4 md:mt-0">
                   <p className="text-gray-700 dark:text-gray-300">
-                    Developed responsive user interfaces and collaborated with designers to implement pixel-perfect UIs.
+                    Developed responsive UIs and collaborated with designers to implement pixel-perfect interfaces.
                   </p>
                 </div>
               </div>
@@ -240,6 +266,21 @@ const AboutPage = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Scroll-to-top button */}
+      {showScroll && (
+        <motion.button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <FiArrowUp className="text-xl" />
+        </motion.button>
+      )}
     </div>
   );
 };

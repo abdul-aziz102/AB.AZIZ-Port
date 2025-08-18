@@ -8,9 +8,8 @@ import ContactPage from './components/Contact';
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Chatbot from './pages/Chatbot';
-import { Skills } from './pages/Skills';
-import ChatbotWidget from './components/ChatbotWidget'; // ✅ Import the floating widget
+import { Skills } from './pages/Skills'; // ✅ Import the floating widget
+import { Chat } from './components/Chat';
 
 const App = () => {
   console.log("App component rendered");
@@ -18,7 +17,7 @@ const App = () => {
   return (
     <Router>
       <Navbar />
-      
+      <Chat />
       <Routes>
         <Route path="/" element={
           <>
@@ -33,10 +32,8 @@ const App = () => {
         <Route path="/skills" element={<Skills />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/chat" element={<Chatbot />} />
       </Routes>
-
-      <ChatbotWidget /> {/* ✅ Always visible floating chatbot icon */}
+ {/* ✅ Always visible floating chatbot icon */}
       <Footer />
     </Router>
   );
