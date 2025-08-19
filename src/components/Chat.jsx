@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import '@n8n/chat/dist/style.css';
+import './custom-chat.css';
 import { createChat } from '@n8n/chat';
 
 export const Chat = () => {
@@ -15,13 +16,13 @@ export const Chat = () => {
       ],
       i18n: {
         en: {
-          title: "Welcome to My Portfolio 👋",
-          subtitle: "Ask us anything, we’re happy to help!"
+          // HEADER TITLE WITH ROBOT ICON
+          title: "🤖 My AI Assistant",
+          subtitle: "Ask me anything, I’m here to help!"
         }
       }
-      
     });
   }, []);
-  
+
   return <div id="n8n-chat"></div>;
 };
