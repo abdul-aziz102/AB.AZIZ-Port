@@ -35,7 +35,8 @@ const Navbar = () => {
     { name: 'Skills', to: '/skills' },
     { name: 'About', to: '/about' },
     { name: 'Contact', to: '/contact' },
-    
+    { name: 'Services', to: '/services' },
+
   ];
 
   const socialLinks = [
@@ -53,7 +54,8 @@ const Navbar = () => {
             to="/"
             className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"
           >
-            AZ.BRAND
+            
+            AZ.TECH
           </Link>
 
           {/* Desktop nav center */}

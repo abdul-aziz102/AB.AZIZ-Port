@@ -1,12 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FiMail, FiMapPin, FiGithub, FiLinkedin, FiTwitter, FiArrowUp } from 'react-icons/fi';
 import { FaReact, FaNodeJs, FaDatabase } from 'react-icons/fa';
 import { SiTailwindcss, SiMongodb } from 'react-icons/si';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 const AboutPage = () => {
   // Scroll to top functionality
   const [showScroll, setShowScroll] = useState(false);
+  
+  // Refs for scroll animations
+  const experienceRef = useRef(null);
+  const isExperienceInView = useInView(experienceRef, { once: true, margin: "-100px" });
+  
+  const timelineRef = useRef(null);
+  const isTimelineInView = useInView(timelineRef, { once: true, margin: "-100px" });
 
   useEffect(() => {
     const checkScroll = () => {
@@ -57,6 +64,35 @@ const AboutPage = () => {
       transition: { duration: 0.5 }
     }
   };
+  
+  // Scroll animation variants
+  const scrollVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+  
+  const staggerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+  
+  const timelineItemVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.6 }
+    }
+  };
 
   return (
     <div className="w-full min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-6 py-12" id="about">
@@ -68,14 +104,19 @@ const AboutPage = () => {
           className="flex flex-col lg:flex-row gap-12 items-center"
         >
           {/* Profile Image */}
-          <div className="w-full lg:w-1/3 flex justify-center relative">
+          <motion.div 
+            className="w-full lg:w-1/3 flex justify-center relative"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+          >
             <motion.div
               whileHover={{ scale: 1.03 }}
               className="relative group w-64 h-64 md:w-80 md:h-80"
             >
               <div className="absolute inset-0 rounded-full border-4 border-blue-500/30 overflow-hidden shadow-xl">
                 <img
-                  src="az.jpg"
+                  src="/aziz.jpg"
                   alt="Profile"
                   className="w-full h-full object-cover rounded-full"
                 />
@@ -84,20 +125,25 @@ const AboutPage = () => {
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
               <div className="absolute -inset-4 rounded-full bg-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* About Content */}
           <div className="w-full lg:w-2/3">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <motion.h1 
+              className="text-4xl md:text-5xl font-bold mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
                 About Me
               </span>
-            </h1>
+            </motion.h1>
 
             <motion.h2 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.4 }}
               className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-6"
             >
               Full Stack Developer & UI/UX Designer
@@ -132,20 +178,28 @@ const AboutPage = () => {
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {techStack.map((tech, index) => (
-                  <div key={index} className="flex items-center gap-2">
+                  <motion.div 
+                    key={index} 
+                    className="flex items-center gap-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
+                  >
                     <div className="text-xl">
                       {tech.icon}
                     </div>
                     <div>
                       <div className="font-medium text-gray-800 dark:text-gray-200">{tech.name}</div>
                       <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-1.5">
-                        <div 
+                        <motion.div 
                           className="h-1.5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
-                          style={{ width: `${tech.level}%` }}
-                        ></div>
+                          initial={{ width: 0 }}
+                          animate={{ width: `${tech.level}%` }}
+                          transition={{ duration: 1, delay: 1.2 + index * 0.1, ease: "easeOut" }}
+                        ></motion.div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -157,7 +211,12 @@ const AboutPage = () => {
               transition={{ delay: 1 }}
               className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8"
             >
-              <div className="flex items-center">
+              <motion.div 
+                className="flex items-center"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 1.1 }}
+              >
                 <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full mr-3">
                   <FiMail className="text-blue-500" />
                 </div>
@@ -165,8 +224,13 @@ const AboutPage = () => {
                   <div className="text-sm text-gray-500 dark:text-gray-400">Email</div>
                   <div className="text-gray-700 dark:text-gray-300">your.email@example.com</div>
                 </div>
-              </div>
-              <div className="flex items-center">
+              </motion.div>
+              <motion.div 
+                className="flex items-center"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 1.1 }}
+              >
                 <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full mr-3">
                   <FiMapPin className="text-blue-500" />
                 </div>
@@ -174,7 +238,7 @@ const AboutPage = () => {
                   <div className="text-sm text-gray-500 dark:text-gray-400">Location</div>
                   <div className="text-gray-700 dark:text-gray-300">San Francisco, CA</div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
 
             {/* Social Links */}
@@ -184,85 +248,128 @@ const AboutPage = () => {
               transition={{ delay: 1.2 }}
               className="flex gap-4"
             >
-              <a 
+              <motion.a 
                 href="https://github.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <FiGithub className="text-gray-700 dark:text-gray-300" />
-              </a>
-              <a 
+              </motion.a>
+              <motion.a 
                 href="https://linkedin.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <FiLinkedin className="text-gray-700 dark:text-gray-300" />
-              </a>
-              <a 
+              </motion.a>
+              <motion.a 
                 href="https://twitter.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <FiTwitter className="text-gray-700 dark:text-gray-300" />
-              </a>
-              <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:shadow-lg transition-all transform hover:-translate-y-1">
+              </motion.a>
+              <motion.button 
+                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:shadow-lg transition-all transform hover:-translate-y-1"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 Contact Me
-              </button>
+              </motion.button>
             </motion.div>
           </div>
         </motion.div>
 
         {/* Experience Section */}
         <motion.div
+          ref={experienceRef}
           initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4 }}
+          animate={isExperienceInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.7 }}
           className="mt-20"
         >
-          <h2 className="text-3xl font-bold mb-8 text-center">
+          <motion.h2 
+            className="text-3xl font-bold mb-8 text-center"
+            initial={{ opacity: 0 }}
+            animate={isExperienceInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
               My Experience
             </span>
-          </h2>
+          </motion.h2>
           
-          <div className="relative">
+          <div className="relative" ref={timelineRef}>
             {/* Timeline bar */}
-            <div className="absolute left-4 md:left-1/2 h-full w-1 bg-gray-300 dark:bg-gray-700 transform -translate-x-1/2"></div>
+            <motion.div 
+              className="absolute left-4 md:left-1/2 h-full w-1 bg-gray-300 dark:bg-gray-700 transform -translate-x-1/2"
+              initial={{ scaleY: 0 }}
+              animate={isTimelineInView ? { scaleY: 1 } : { scaleY: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              style={{ originY: 0 }}
+            ></motion.div>
             
-            <div className="space-y-8">
+            <motion.div 
+              className="space-y-8"
+              variants={staggerVariants}
+              initial="hidden"
+              animate={isTimelineInView ? "visible" : "hidden"}
+            >
               {/* Timeline item 1 */}
-              <div className="relative pl-12 md:pl-0 md:flex justify-center">
+              <motion.div 
+                className="relative pl-12 md:pl-0 md:flex justify-center"
+                variants={timelineItemVariants}
+              >
                 <div className="md:w-5/12 md:pr-8 md:text-right">
                   <div className="text-sm text-gray-500 dark:text-gray-400">2023 - Present</div>
                   <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Full Stack Developer</h3>
                   <p className="text-gray-600 dark:text-gray-300">Tech Solutions Inc.</p>
                 </div>
-                <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"></div>
+                <motion.div 
+                  className="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"
+                  initial={{ scale: 0 }}
+                  animate={isTimelineInView ? { scale: 1 } : { scale: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                ></motion.div>
                 <div className="md:w-5/12 md:pl-8 mt-4 md:mt-0">
                   <p className="text-gray-700 dark:text-gray-300">
                     Build scalable web applications with modern frameworks. Implemented CI/CD pipelines and optimized performance.
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Timeline item 2 */}
-              <div className="relative pl-12 md:pl-0 md:flex justify-center">
+              <motion.div 
+                className="relative pl-12 md:pl-0 md:flex justify-center"
+                variants={timelineItemVariants}
+              >
                 <div className="md:w-5/12 md:pr-8 md:text-right">
                   <div className="text-sm text-gray-500 dark:text-gray-400">2021 - 2023</div>
                   <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Frontend Developer</h3>
                   <p className="text-gray-600 dark:text-gray-300">Digital Creations</p>
                 </div>
-                <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-purple-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"></div>
+                <motion.div 
+                  className="absolute left-0 top-0 w-8 h-8 rounded-full bg-purple-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"
+                  initial={{ scale: 0 }}
+                  animate={isTimelineInView ? { scale: 1 } : { scale: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                ></motion.div>
                 <div className="md:w-5/12 md:pl-8 mt-4 md:mt-0">
                   <p className="text-gray-700 dark:text-gray-300">
                     Developed responsive UIs and collaborated with designers to implement pixel-perfect interfaces.
                   </p>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -275,7 +382,7 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.1, rotate: 5 }}
           whileTap={{ scale: 0.9 }}
         >
           <FiArrowUp className="text-xl" />

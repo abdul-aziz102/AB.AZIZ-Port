@@ -1,25 +1,55 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const PortfolioBanner = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="relative w-full min-h-screen mt-14 flex items-center bg-white dark:bg-gray-900 px-8 md:px-12 transition-colors duration-300 overflow-hidden">
-      {/* Background elements */}
+    <div 
+      ref={sectionRef}
+      className="relative w-full min-h-screen mt-14 flex items-center bg-white dark:bg-gray-900 px-8 md:px-12 transition-colors duration-300 overflow-hidden"
+    >
+      {/* Background elements with animation */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10 dark:opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-400 filter blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-purple-500 filter blur-3xl"></div>
+        <div className={`absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-400 filter blur-3xl ${isVisible ? 'animate-pulse-slow' : 'opacity-0'}`} 
+             style={{ transition: 'opacity 1.5s ease-in-out, transform 2s ease-in-out' }}></div>
+        <div className={`absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-purple-500 filter blur-3xl ${isVisible ? 'animate-pulse-slow' : 'opacity-0'}`} 
+             style={{ transition: 'opacity 1.5s ease-in-out 0.5s, transform 2s ease-in-out 0.5s' }}></div>
       </div>
       
-      {/* Floating tech icons */}
-      <div className="absolute top-1/4 left-1/5 opacity-20 animate-float">
+      {/* Floating tech icons with enhanced animation */}
+      <div className={`absolute top-1/4 left-1/5 opacity-20 ${isVisible ? 'animate-float' : 'opacity-0'}`}
+           style={{ transition: 'opacity 0.8s ease-in-out 1s' }}>
         <TechIcon icon="react" size={40} />
       </div>
-      <div className="absolute top-1/3 right-1/4 opacity-20 animate-float-delay">
+      <div className={`absolute top-1/3 right-1/4 opacity-20 ${isVisible ? 'animate-float-delay' : 'opacity-0'}`}
+           style={{ transition: 'opacity 0.8s ease-in-out 1.2s' }}>
         <TechIcon icon="node" size={50} />
       </div>
-      <div className="absolute bottom-1/4 left-1/3 opacity-20 animate-float-delay-2">
+      <div className={`absolute bottom-1/4 left-1/3 opacity-20 ${isVisible ? 'animate-float-delay-2' : 'opacity-0'}`}
+           style={{ transition: 'opacity 0.8s ease-in-out 1.4s' }}>
         <TechIcon icon="js" size={30} />
       </div>
-      <div className="absolute bottom-1/3 right-1/5 opacity-20 animate-float">
+      <div className={`absolute bottom-1/3 right-1/5 opacity-20 ${isVisible ? 'animate-float' : 'opacity-0'}`}
+           style={{ transition: 'opacity 0.8s ease-in-out 1.6s' }}>
         <TechIcon icon="css" size={45} />
       </div>
 
@@ -27,14 +57,16 @@ const PortfolioBanner = () => {
       <div className="relative z-10 mt-14 h-full flex flex-col lg:flex-row items-center justify-between gap-8 max-w-6xl mx-auto w-full">
         {/* Text content */}
         <div className="lg:w-1/2">
-          <div className="mb-2 flex items-center gap-2">
+          <div className={`mb-2 flex items-center gap-2 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+               style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.2s' }}>
             <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600"></div>
             <span className="text-sm font-medium text-blue-500 dark:text-blue-400">
               AVAILABLE FOR FREELANCE
             </span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className={`text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+              style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.3s' }}>
             <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
               Hello, I'm
             </span>
@@ -45,30 +77,33 @@ const PortfolioBanner = () => {
             </span>
           </h1>
 
-          <h2 className="text-xl md:text-2xl font-medium text-gray-700 dark:text-gray-300 mb-6 relative pl-4 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2/3 before:bg-gradient-to-b before:from-blue-500 before:to-purple-600 before:rounded-full">
+          <h2 className={`text-xl md:text-2xl font-medium text-gray-700 dark:text-gray-300 mb-6 relative pl-4 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2/3 before:bg-gradient-to-b before:from-blue-500 before:to-purple-600 before:rounded-full ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+              style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.4s' }}>
             Full Stack Developer & UI/UX Designer
           </h2>
 
-          <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg max-w-lg">
+          <p className={`text-gray-600 dark:text-gray-400 mb-8 text-lg max-w-lg ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+             style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.5s' }}>
             I build exceptional digital experiences with modern web technologies. 
             Currently specializing in <span className="font-medium text-blue-500 dark:text-blue-400">React</span>,{' '}
             <span className="font-medium text-purple-500 dark:text-purple-400">Node.js</span>, and{' '}
             <span className="font-medium text-green-500 dark:text-green-400">UI/UX Design</span>.
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div className={`flex flex-wrap gap-4 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+               style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.6s' }}>
             <a href="/projects">
-              <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-blue-500/30 flex items-center gap-2">
+              <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-blue-500/30 flex items-center gap-2 group">
                 <span>View My Work</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
                 </svg>
               </button>
             </a>
             <a href="/contact">
-              <button className="px-6 py-3 border border-gray-400 dark:border-gray-600 text-gray-800 dark:text-white font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 flex items-center gap-2">
+              <button className="px-6 py-3 border border-gray-400 dark:border-gray-600 text-gray-800 dark:text-white font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 flex items-center gap-2 group">
                 <span>Contact Me</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                 </svg>
@@ -77,16 +112,18 @@ const PortfolioBanner = () => {
           </div>
 
           {/* Social links */}
-          <div className="mt-8 flex items-center gap-4">
+          <div className={`mt-8 flex items-center gap-4 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+               style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.7s' }}>
             <p className="text-gray-500 dark:text-gray-400 text-sm">Follow me:</p>
             <div className="flex gap-3">
-              {['github', 'linkedin', 'twitter', 'dribbble'].map((social) => (
+              {['github', 'linkedin', 'twitter', 'dribbble'].map((social, index) => (
                 <a 
                   key={social}
                   href={`https://${social}.com`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 transition-colors duration-300"
+                  className={`text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 transition-all duration-300 transform hover:-translate-y-1 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+                  style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: `${0.8 + index * 0.1}s` }}
                 >
                   <SocialIcon platform={social} size={20} />
                 </a>
@@ -95,14 +132,15 @@ const PortfolioBanner = () => {
           </div>
         </div>
 
-        {/* Image */}
+        {/* Image with enhanced animation */}
         <div className="lg:w-1/2 flex justify-center lg:justify-end relative">
-          <div className="relative group w-72 h-72 md:w-80 md:h-80">
+          <div className={`relative group w-72 h-72 md:w-80 md:h-80 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
+               style={{ transition: 'opacity 1s ease-in-out, transform 1s ease-in-out', transitionDelay: '0.9s' }}>
             <div className="absolute inset-0 rounded-full border-4 border-blue-400/30 overflow-hidden shadow-xl">
               <img
                 src="/aziz.jpg"
                 alt="Profile"
-                className="w-full h-full object-cover rounded-full"
+                className="w-full h-full object-cover rounded-full transform group-hover:scale-105 transition-transform duration-700"
               />
             </div>
             <div className="absolute inset-0 rounded-full border-4 border-transparent group-hover:border-blue-400/50 transition-all duration-500 pointer-events-none"></div>
@@ -110,17 +148,84 @@ const PortfolioBanner = () => {
             <div className="absolute -inset-4 rounded-full bg-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             
             {/* Decorative dots */}
-            <div className="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-purple-500/10 blur-md"></div>
-            <div className="absolute -bottom-4 -right-4 w-20 h-20 rounded-full bg-blue-500/10 blur-md"></div>
+            <div className="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-purple-500/10 blur-md animate-pulse"></div>
+            <div className="absolute -bottom-4 -right-4 w-20 h-20 rounded-full bg-blue-500/10 blur-md animate-pulse" style={{ animationDelay: '1s' }}></div>
             
             {/* Badge */}
-            <div className="absolute -bottom-2 -right-2 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-md flex items-center gap-2 border border-gray-200 dark:border-gray-700">
+            <div className="absolute -bottom-2 -right-2 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-md flex items-center gap-2 border border-gray-200 dark:border-gray-700 transform hover:scale-105 transition-transform duration-300">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Available</span>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Add custom animation styles */}
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes float {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+        @keyframes pulseSlow {
+          0% {
+            transform: scale(1);
+            opacity: 0.7;
+          }
+          50% {
+            transform: scale(1.05);
+            opacity: 0.8;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 0.7;
+          }
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s forwards;
+        }
+        .animate-fade-in {
+          animation: fadeIn 1s forwards;
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        .animate-float-delay {
+          animation: float 7s ease-in-out infinite;
+          animation-delay: 1s;
+        }
+        .animate-float-delay-2 {
+          animation: float 5s ease-in-out infinite;
+          animation-delay: 2s;
+        }
+        .animate-pulse-slow {
+          animation: pulseSlow 4s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
@@ -175,7 +280,7 @@ const SocialIcon = ({ platform, size = 24 }) => {
     ),
     linkedin: (
       <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.790-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
       </svg>
     ),
     twitter: (
@@ -185,7 +290,7 @@ const SocialIcon = ({ platform, size = 24 }) => {
     ),
     dribbble: (
       <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm9.847 7.929c-.634 3.223-2.475 5.947-5.115 7.453.002-.166.004-.332.004-.499 0-.076-.001-.151-.002-.227.798-.585 1.493-1.281 2.136-2.047 1.034.482 1.79 1.416 2.101 2.534.237-.18.462-.375.676-.583-.408-.93-1.098-1.714-1.943-2.251 1.619-1.833 2.586-4.271 2.586-6.912 0-.115-.003-.229-.007-.342.872.649 1.62 1.493 2.171 2.533-.207-.616-.514-1.185-.896-1.699zm-3.848-1.52c1.152.693 2.086 1.676 2.774 2.832.088-.006.176-.009.265-.009 2.213 0 4.212.913 5.656 2.383-.146-2.958-1.553-5.466-3.737-6.787-.898 1.035-2.338 1.913-4.958 1.581zm-6.269 1.137c-3.167.355-5.91 2.477-6.797 5.495-1.662-2.333-2.616-5.379-2.616-8.664 0-.198.005-.395.014-.59.984-.165 1.998-.251 3.036-.251 3.17 0 6.119 1.097 8.428 2.925-.98-.122-1.945-.184-2.913-.184-.378 0-.755.014-1.132.042zm-5.142 13.414c-.372-1.21-.574-2.494-.574-3.824 0-1.045.108-2.063.312-3.041 1.14.772 2.529 1.239 4.032 1.239 1.645 0 3.158-.537 4.389-1.439.272 1.021.409 2.107.409 3.239 0 1.532-.328 2.982-.911 4.291-2.056-.613-3.868-1.974-4.657-3.465zm5.735 3.912c1.088-1.587 1.821-3.522 2.093-5.588.889.268 1.753.612 2.57 1.028-.409 2.054-1.693 3.814-3.445 4.843-.408-.095-.799-.209-1.18-.341.017-.318.026-.639.026-.961 0-.311-.009-.618-.024-.921.362.12.732.228 1.108.323.002.016.004.032.004.048 0 .325-.012.647-.034.967-.706-.26-1.364-.611-1.958-1.039zm7.056-1.678c-.646-.382-1.336-.708-2.063-.971.19-1.619.19-3.257 0-4.876.727-.263 1.417-.589 2.063-.971 2.086 1.482 3.426 3.813 3.426 6.409 0 2.596-1.34 4.927-3.426 6.409zm4.122-8.409c-.335.94-.929 1.756-1.71 2.386-.045-.033-.089-.068-.134-.101-1.185-1.147-2.729-1.882-4.433-2.05.673-2.266.673-4.571 0-6.837 1.704-.168 3.248-.903 4.433-2.05.045-.033.089-.068.134-.101.781.63 1.375 1.446 1.71 2.386.335.94.517 1.963.517 3.036s-.182 2.096-.517 3.036z"/>
+        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm9.847 7.929c-.634 3.223-2.475 5.947-5.115 7.453.002-.166.004-.332.004-.499 0-.076-.001-.151-.002-.227.798-.585 1.493-1.281 2.136-2.047 1.034.482 1.79 1.416 2.101 2.534.237-.18.462-.375.676-.583-.408-.93-1.098-1.714-1.943-2.251 1.619-1.833 2.586-4.271 2.586-6.912 0-.115-.003-.229-.007-.342.872.649 1.62 1.493 2.171 2.533-.207-.616-.514-1.185-.896-1.699zm-3.848-1.52c1.152.693 2.086 1.676 2.774 2.832.088-.006.176-.009.265-.009 2.213 0 4.212.913 5.656 2.383-.146-2.958-1.553-5.466-3.737-6.787-.898 1.035-2.338 1.913-4.958 1.581zm-6.269 1.137c-3.167.355-5.91 2.477-6.797 5.495-1.662-2.333-2.616-5.379-2.616-8.664 0-.198.005-.395.014-.59.984-.165 1.998-.251 3.036-.251 3.17 0 6.119 1.097 8.428 2.925-.98-.122-1.945-.184-2.913-.184-.378 0-.755.014-1.132.042zm-5.142 13.414c-.372-1.21-.574-2.494-.574-3.824 0-1.045.108-2.063.312-3.041 1.14.772 2.529 1.239 4.032 1.239 1.645 0 3.158-.537 4.389-1.439.272 1.021.409 2.107.409 3.239 0 1.532-.328 2.982-.911 4.291-2.056-.613-3.868-1.974-4.657-3.465zm5.735 3.912c1.088-1.587 1.821-3.522 2.093-5.588.889.268 1.753.612 2.57 1.028-.409 2.054-1.693 3.814-3.445 4.843-.408-.095-.799-.209-1.180-.341.017-.318.026-.639.026-.961 0-.311-.009-.618-.024-.921.362.12.732.228 1.108.323.002.016.004.032.004.048 0 .325-.012.647-.034.967-.706-.26-1.364-.611-1.958-1.039zm7.056-1.678c-.646-.382-1.336-.708-2.063-.971.19-1.619.19-3.257 0-4.876.727-.263 1.417-.589 2.063-.971 2.086 1.482 3.426 3.813 3.426 6.409 0 2.596-1.34 4.927-3.426 6.409zm4.122-8.409c-.335.94-.929 1.756-1.71 2.386-.045-.033-.089-.068-.134-.101-1.185-1.147-2.729-1.882-4.433-2.050.673-2.266.673-4.571 0-6.837 1.704-.168 3.248-.903 4.433-2.050.045-.033.089-.068.134-.101.781.63 1.375 1.446 1.71 2.386.335.94.517 1.963.517 3.036s-.182 2.096-.517 3.036z"/>
       </svg>
     )
   };

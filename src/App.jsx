@@ -9,7 +9,9 @@ import Footer from './components/Footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Skills } from './pages/Skills'; // ✅ Import the floating widget
-import { Chat } from './components/Chat';
+import { Chat } from './components/Chat'
+import ServicesPage from './pages/Services';
+import VapiAgent from './components/VapiWidget';
 
 const App = () => {
   console.log("App component rendered");
@@ -18,11 +20,13 @@ const App = () => {
     <Router>
       <Navbar />
       <Chat />
+      <VapiAgent />
       <Routes>
         <Route path="/" element={
           <>
             <Banner />
             <SkillsComponent />
+            <ServicesPage />
             <ProjectsPage />
             <AboutPage />
             <ContactPage />
@@ -32,6 +36,7 @@ const App = () => {
         <Route path="/skills" element={<Skills />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/services" element={<ServicesPage />} />
       </Routes>
  {/* ✅ Always visible floating chatbot icon */}
       <Footer />
