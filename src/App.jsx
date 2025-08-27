@@ -8,39 +8,41 @@ import ContactPage from './components/Contact';
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { Skills } from './pages/Skills'; // ✅ Import the floating widget
-import { Chat } from './components/Chat'
+import { Skills } from './pages/Skills';
 import ServicesPage from './pages/Services';
-import VapiAgent from './components/VapiWidget';
+import { Chat } from './components/Chat';
 
 const App = () => {
   console.log("App component rendered");
-  
+
   return (
-    <Router>
-      <Navbar />
-      <Chat />
-      <VapiAgent />
-      <Routes>
-        <Route path="/" element={
-          <>
-            <Banner />
-            <SkillsComponent />
-            <ServicesPage />
-            <ProjectsPage />
-            <AboutPage />
-            <ContactPage />
-          </>
-        } />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/skills" element={<Skills />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/services" element={<ServicesPage />} />
-      </Routes>
- {/* ✅ Always visible floating chatbot icon */}
-      <Footer />
-    </Router>
+    <div className='w-full'>
+      <Router>
+        <Navbar />
+
+
+        <Chat />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Banner />
+              <SkillsComponent />
+              <ServicesPage />
+              <ProjectsPage />
+              <AboutPage />
+              <ContactPage />
+            </>
+          } />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/skills" element={<Skills />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+        </Routes>
+
+        <Footer />
+      </Router>
+    </div>
   );
 };
 
