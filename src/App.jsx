@@ -10,7 +10,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Skills } from './pages/Skills';
 import ServicesPage from './pages/Services';
-import { Chat } from './components/Chat';
 
 const App = () => {
   console.log("App component rendered");
@@ -20,8 +19,7 @@ const App = () => {
       <Router>
         <Navbar />
 
-
-        <Chat />
+      
         <Routes>
           <Route path="/" element={
             <>
