@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Skills } from './pages/Skills';
 import ServicesPage from './pages/Services';
+import OrbitingSkills from './components/ui/orbiting-skills';
 
 const App = () => {
   console.log("App component rendered");
@@ -25,6 +26,7 @@ const App = () => {
             <>
               <Banner />
               <SkillsComponent />
+              <OrbitingSkills />
               <ServicesPage />
               <ProjectsPage />
               <AboutPage />

@@ -116,7 +116,7 @@ const AboutPage = () => {
             >
               <div className="absolute inset-0 rounded-full border-4 border-blue-500/30 overflow-hidden shadow-xl">
                 <img
-                  src="/aziz.jpg"
+                  src="/front.jpg"
                   alt="Profile"
                   className="w-full h-full object-cover rounded-full"
                 />
