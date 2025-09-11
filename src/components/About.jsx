@@ -95,7 +95,7 @@ const AboutPage = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-6 py-12" id="about">
+    <div className="w-full min-h-screen t  px-6 py-12" id="about">
       <div className="max-w-6xl mt-14 mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -144,7 +144,7 @@ const AboutPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-6"
+              className="text-xl md:text-2xl text-white mb-6"
             >
               Full Stack Developer & UI/UX Designer
             </motion.h2>
@@ -155,13 +155,13 @@ const AboutPage = () => {
               animate="visible"
               className="space-y-4 mb-6"
             >
-              <motion.p variants={item} className="text-lg text-gray-700 dark:text-gray-300">
+              <motion.p variants={item} className="text-lg text-white">
                 I'm a passionate developer with expertise in building modern web applications. I specialize in creating seamless, responsive, and user-friendly experiences across the entire stack.
               </motion.p>
-              <motion.p variants={item} className="text-lg text-gray-700 dark:text-gray-300">
+              <motion.p variants={item} className="text-lg text-white">
                 With 1+ year of experience, I've delivered production-ready solutions using React, Node.js, MongoDB, and Tailwind CSS. I prioritize clean, maintainable code and intuitive user interfaces.
               </motion.p>
-              <motion.p variants={item} className="text-lg text-gray-700 dark:text-gray-300">
+              <motion.p variants={item} className="text-lg text-white">
                 When I'm not coding, I contribute to open-source projects, mentor junior developers, and continuously expand my skills through online courses and tech communities.
               </motion.p>
             </motion.div>
@@ -173,7 +173,7 @@ const AboutPage = () => {
               transition={{ delay: 0.8 }}
               className="mb-8"
             >
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 My Tech Stack
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -189,7 +189,7 @@ const AboutPage = () => {
                       {tech.icon}
                     </div>
                     <div>
-                      <div className="font-medium text-gray-800 dark:text-gray-200">{tech.name}</div>
+                      <div className="font-medium   text-gray-200">{tech.name}</div>
                       <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-1.5">
                         <motion.div 
                           className="h-1.5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
@@ -221,8 +221,8 @@ const AboutPage = () => {
                   <FiMail className="text-blue-500" />
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Email</div>
-                  <div className="text-gray-700 dark:text-gray-300">your.email@example.com</div>
+                  <div className="text-sm text-white">Email</div>
+                  <div className="text-white">your.email@example.com</div>
                 </div>
               </motion.div>
               <motion.div 
@@ -235,57 +235,14 @@ const AboutPage = () => {
                   <FiMapPin className="text-blue-500" />
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Location</div>
-                  <div className="text-gray-700 dark:text-gray-300">San Francisco, CA</div>
+                  <div className="text-sm text-white">Location</div>
+                  <div className="text-white">San Francisco, CA</div>
                 </div>
               </motion.div>
             </motion.div>
 
             {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-              className="flex gap-4"
-            >
-              <motion.a 
-                href="https://github.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FiGithub className="text-gray-700 dark:text-gray-300" />
-              </motion.a>
-              <motion.a 
-                href="https://linkedin.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FiLinkedin className="text-gray-700 dark:text-gray-300" />
-              </motion.a>
-              <motion.a 
-                href="https://twitter.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FiTwitter className="text-gray-700 dark:text-gray-300" />
-              </motion.a>
-              <motion.button 
-                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:shadow-lg transition-all transform hover:-translate-y-1"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Me
-              </motion.button>
-            </motion.div>
+            
           </div>
         </motion.div>
 
@@ -330,9 +287,9 @@ const AboutPage = () => {
                 variants={timelineItemVariants}
               >
                 <div className="md:w-5/12 md:pr-8 md:text-right">
-                  <div className="text-sm text-gray-500 dark:text-gray-400">2023 - Present</div>
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Full Stack Developer</h3>
-                  <p className="text-gray-600 dark:text-gray-300">Tech Solutions Inc.</p>
+                  <div className="text-sm text-white">2023 - Present</div>
+                  <h3 className="text-xl font-semibold text-white">Full Stack Developer</h3>
+                  <p className="text-white">Tech Solutions Inc.</p>
                 </div>
                 <motion.div 
                   className="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"
@@ -341,7 +298,7 @@ const AboutPage = () => {
                   transition={{ duration: 0.5, delay: 0.3 }}
                 ></motion.div>
                 <div className="md:w-5/12 md:pl-8 mt-4 md:mt-0">
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-white">
                     Build scalable web applications with modern frameworks. Implemented CI/CD pipelines and optimized performance.
                   </p>
                 </div>
@@ -353,9 +310,9 @@ const AboutPage = () => {
                 variants={timelineItemVariants}
               >
                 <div className="md:w-5/12 md:pr-8 md:text-right">
-                  <div className="text-sm text-gray-500 dark:text-gray-400">2021 - 2023</div>
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Frontend Developer</h3>
-                  <p className="text-gray-600 dark:text-gray-300">Digital Creations</p>
+                  <div className="text-sm text-white">2021 - 2023</div>
+                  <h3 className="text-xl font-semibold text-white">Frontend Developer</h3>
+                  <p className="text-white">Digital Creations</p>
                 </div>
                 <motion.div 
                   className="absolute left-0 top-0 w-8 h-8 rounded-full bg-purple-500 border-4 border-white dark:border-gray-900 transform -translate-x-1/2 md:left-1/2"
@@ -364,7 +321,7 @@ const AboutPage = () => {
                   transition={{ duration: 0.5, delay: 0.5 }}
                 ></motion.div>
                 <div className="md:w-5/12 md:pl-8 mt-4 md:mt-0">
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-white">
                     Developed responsive UIs and collaborated with designers to implement pixel-perfect interfaces.
                   </p>
                 </div>

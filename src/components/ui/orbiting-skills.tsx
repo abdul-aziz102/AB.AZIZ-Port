@@ -104,7 +104,7 @@ const skillsConfig: SkillConfig[] = [
     id: 'html',
     orbitRadius: 100, 
     size: 40, 
-    speed: 1, 
+    speed: 2, 
     iconType: 'html', 
     phaseShift: 0, 
     glowColor: 'cyan',
@@ -114,7 +114,7 @@ const skillsConfig: SkillConfig[] = [
     id: 'css',
     orbitRadius: 100, 
     size: 45, 
-    speed: 1, 
+    speed: 2, 
     iconType: 'css', 
     phaseShift: (2 * Math.PI) / 3, 
     glowColor: 'cyan',
@@ -124,7 +124,7 @@ const skillsConfig: SkillConfig[] = [
     id: 'javascript',
     orbitRadius: 100, 
     size: 40, 
-    speed: 1, 
+    speed: 2, 
     iconType: 'javascript', 
     phaseShift: (4 * Math.PI) / 3, 
     glowColor: 'cyan',
@@ -173,7 +173,7 @@ const OrbitingSkill = memo(({ config, angle }: OrbitingSkillProps) => {
 
   return (
     <div
-      className="absolute top-1/2 left-1/2 transition-all duration-300 ease-out"
+      className="absolute top-1/2  left-1/2 transition-all duration-300 ease-out"
       style={{
         width: `${size}px`,
         height: `${size}px`,
@@ -185,7 +185,7 @@ const OrbitingSkill = memo(({ config, angle }: OrbitingSkillProps) => {
     >
       <div
         className={`
-          relative w-full h-full p-2 bg-gray-800/90 backdrop-blur-sm
+          relative w-full h-full p-2 bg-white dark:bg-gray-900 backdrop-blur-sm
           rounded-full flex items-center justify-center
           transition-all duration-300 cursor-pointer
           ${isHovered ? 'scale-125 shadow-2xl' : 'shadow-lg hover:shadow-xl'}
@@ -198,7 +198,7 @@ const OrbitingSkill = memo(({ config, angle }: OrbitingSkillProps) => {
       >
         <SkillIcon type={iconType} />
         {isHovered && (
-          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-900/95 backdrop-blur-sm rounded text-xs text-white whitespace-nowrap pointer-events-none">
+          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white pointer-events-none">
             {label}
           </div>
         )}
@@ -287,63 +287,129 @@ export default function OrbitingSkills() {
   ];
 
   return (
-    <main className="w-full flex items-center justify-center overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div 
-          className="absolute inset-0" 
-          style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, #374151 0%, transparent 50%),
-                             radial-gradient(circle at 75% 75%, #4B5563 0%, transparent 50%)`,
-          }}
-        />
+    <main className="w-full min-h-screen flex flex-col  items-center justify-center overflow-hidden bg-gradient-to-br text-white py-12 px-4">
+      {/* Header Section */}
+      <div className="text-center mb-12 max-w-3xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">
+          My Technical Skills
+        </h1>
+        <p className="text-lg md:text-xl text-gray-300 mb-8">
+          A visual representation of my core web development technologies and frameworks
+        </p>
       </div>
 
-      <div 
-        className="relative w-[calc(100vw-40px)] h-[calc(100vw-40px)] md:w-[450px] md:h-[450px] flex items-center justify-center"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        
-        {/* Central "Code" Icon with enhanced glow */}
-        <div className="w-20 h-20 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center z-10 relative shadow-2xl">
-          <div className="absolute inset-0 rounded-full bg-cyan-500/30 blur-xl animate-pulse"></div>
-          <div className="absolute inset-0 rounded-full bg-purple-500/20 blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="relative z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#06B6D4" />
-                  <stop offset="100%" stopColor="#9333EA" />
-                </linearGradient>
-              </defs>
-              <polyline points="16 18 22 12 16 6"></polyline>
-              <polyline points="8 6 2 12 8 18"></polyline>
-            </svg>
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-12 w-full max-w-6xl mx-auto">
+        {/* Skills Visualization */}
+        <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
+          <div 
+            className="relative w-full h-full flex items-center justify-center"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            {/* Background pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div 
+                className="absolute inset-0" 
+                style={{
+                  backgroundImage: `radial-gradient(circle at 25% 25%, #374151 0%, transparent 50%),
+                                  radial-gradient(circle at 75% 75%, #4B5563 0%, transparent 50%)`,
+                }}
+              />
+            </div>
+
+            {/* Central "Code" Icon with enhanced glow */}
+            <div className="w-20 h-20 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center z-10 relative shadow-2xl">
+              <div className="absolute inset-0 rounded-full bg-cyan-500/30 blur-xl animate-pulse"></div>
+              <div className="absolute inset-0 rounded-full bg-purple-500/20 blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+              <div className="relative z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#06B6D4" />
+                      <stop offset="100%" stopColor="#9333EA" />
+                    </linearGradient>
+                  </defs>
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            {/* Render glowing orbit paths */}
+            {orbitConfigs.map((config) => (
+              <GlowingOrbitPath
+                key={`path-${config.radius}`}
+                radius={config.radius}
+                glowColor={config.glowColor}
+                animationDelay={config.delay}
+              />
+            ))}
+
+            {/* Render orbiting skill icons */}
+            {skillsConfig.map((config) => {
+              const angle = time * config.speed + (config.phaseShift || 0);
+              return (
+                <OrbitingSkill
+                  key={config.id}
+                  config={config}
+                  angle={angle}
+                />
+              );
+            })}
           </div>
         </div>
 
-        {/* Render glowing orbit paths */}
-        {orbitConfigs.map((config) => (
-          <GlowingOrbitPath
-            key={`path-${config.radius}`}
-            radius={config.radius}
-            glowColor={config.glowColor}
-            animationDelay={config.delay}
-          />
-        ))}
+        {/* Content Section */}
+        <div className="w-full max-w-md lg:max-w-lg space-y-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Mastering Modern Web Development</h2>
+          
+          <p className="text-gray-300">
+            I specialize in creating responsive, performant web applications using the latest technologies. 
+            My expertise spans both frontend and backend development, allowing me to build complete solutions.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="bg-gray-800/50 p-4 rounded-lg backdrop-blur-sm">
+              <h3 className="font-semibold text-cyan-400 mb-2">Frontend Expertise</h3>
+              <ul className="text-sm text-gray-300 space-y-1">
+                <li>• Responsive Web Design</li>
+                <li>• Modern React Applications</li>
+                <li>• State Management</li>
+                <li>• UI/UX Implementation</li>
+              </ul>
+            </div>
+            
+            <div className="bg-gray-800/50 p-4 rounded-lg backdrop-blur-sm">
+              <h3 className="font-semibold text-purple-400 mb-2">Backend Skills</h3>
+              <ul className="text-sm text-gray-300 space-y-1">
+                <li>• RESTful API Development</li>
+                <li>• Server-Side Rendering</li>
+                <li>• Database Integration</li>
+                <li>• Authentication Systems</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="mt-6 p-4 bg-gradient-to-r from-cyan-900/30 to-purple-900/30 rounded-lg border border-gray-700">
+            <h3 className="font-semibold mb-2">My Development Philosophy</h3>
+            <p className="text-sm text-gray-300">
+              I believe in writing clean, maintainable code that not only functions well but also provides 
+              an exceptional user experience. Performance, accessibility, and scalability are at the core 
+              of my development process.
+            </p>
+          </div>
+        </div>
+      </div>
 
-        {/* Render orbiting skill icons */}
-        {skillsConfig.map((config) => {
-          const angle = time * config.speed + (config.phaseShift || 0);
-          return (
-            <OrbitingSkill
-              key={config.id}
-              config={config}
-              angle={angle}
-            />
-          );
-        })}
+      {/* Call to Action */}
+      <div className="text-center mt-16 max-w-2xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Build Something Amazing?</h2>
+        <p className="text-gray-300 mb-6">
+          Let's discuss how my skills can help bring your next project to life.
+        </p>
+        <button className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg font-medium hover:from-cyan-600 hover:to-purple-700 transition-all transform hover:scale-105">
+          Get In Touch
+        </button>
       </div>
     </main>
   );

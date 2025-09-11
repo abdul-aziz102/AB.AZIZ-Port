@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi';
-import { FaWhatsapp, FaTelegram } from 'react-icons/fa';
+import { FiMail, FiPhone, FiMapPin, FiSend, FiUser } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { SiLinkedin, SiGmail } from 'react-icons/si';
 
 const ContactPage = () => {
@@ -37,41 +37,48 @@ const ContactPage = () => {
       icon: <FiMail className="text-2xl" />,
       title: "Email",
       info: "abdulazizyousufzia@gmail.com",
-      color: "bg-blue-100 dark:bg-blue-900/30",
-      iconColor: "text-blue-500"
+      color: "bg-blue-900/30",
+      iconColor: "text-blue-500",
+      link: "mailto:abdulazizyousufzia@gmail.com"
     },
     {
       icon: <FiPhone className="text-2xl" />,
       title: "Phone",
-      info: "0345 2489424",
-      link: "tel:+923001234567",
-      color: "bg-purple-100 dark:bg-purple-900/30",
+      info: "+92 345 2489424",
+      link: "tel:+923452489424",
+      color: "bg-purple-900/30",
       iconColor: "text-purple-500"
     },
     {
       icon: <FaWhatsapp className="text-2xl" />,
       title: "WhatsApp",
-      info: "+92 3452489424",
-      link: "https://wa.me/923001234567",
-      color: "bg-green-100 dark:bg-green-900/30",
+      info: "+92 345 2489424",
+      link: "https://wa.me/923452489424",
+      color: "bg-green-900/30",
       iconColor: "text-green-500"
     },
-  
     {
       icon: <SiLinkedin className="text-2xl" />,
       title: "LinkedIn",
-      info: "linkedin.com/in/yourprofile",
-      link: "https://linkedin.com/in/yourprofile",
-      color: "bg-blue-100 dark:bg-blue-900/30",
+      info: "Abdul Aziz Yousufzia",
+      link: "https://www.linkedin.com/in/abdul-aziz-yousufzia-a98340356",
+      color: "bg-blue-900/30",
       iconColor: "text-blue-500"
     },
     {
       icon: <SiGmail className="text-2xl" />,
       title: "Gmail",
-      info: "your.email@gmail.com",
-      link: "mailto:your.email@gmail.com",
-      color: "bg-red-100 dark:bg-red-900/30",
+      info: "abdulazizyousufzia",
+      link: "mailto:abdulazizyousufzia@gmail.com",
+      color: "bg-red-900/30",
       iconColor: "text-red-500"
+    },
+    {
+      icon: <FiMapPin className="text-2xl" />,
+      title: "Location",
+      info: "Pakistan",
+      color: "bg-orange-900/30",
+      iconColor: "text-orange-500"
     }
   ];
 
@@ -95,7 +102,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="min-h-screen mt-14 bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-6 py-12 md:px-12">
+    <div className="min-h-screen pt-24 pb-16 bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white px-6 py-12 md:px-12">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -103,13 +110,11 @@ const ContactPage = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-              Get In Touch
-            </span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            Let's <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">Connect</span>
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? Feel free to reach out through any of these channels.
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            Have a project in mind or want to collaborate? I'd love to hear from you. Send me a message and I'll respond as soon as possible.
           </p>
         </motion.div>
 
@@ -121,80 +126,89 @@ const ContactPage = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="w-full lg:w-1/2"
           >
-            <form 
-              onSubmit={handleSubmit}
-              className="bg-gray-100 dark:bg-gray-800 p-8 rounded-xl shadow-lg space-y-6 border border-gray-200 dark:border-gray-700"
-            >
-              <h2 className="text-2xl font-bold text-center mb-6">
+            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700">
+              <h2 className="text-2xl font-bold text-center mb-8 text-white">
                 Send me a message
               </h2>
 
-              <div>
-                <label className="block mb-2 text-gray-800 dark:text-gray-300 font-medium">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your name"
-                  required
-                  className="w-full p-4 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 border border-gray-300 dark:border-gray-600 transition"
-                />
-              </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block mb-2 text-gray-300 font-medium">Full Name</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <FiUser className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your full name"
+                      required
+                      className="w-full pl-10 p-4 rounded-xl bg-gray-700 text-white outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600 transition"
+                    />
+                  </div>
+                </div>
 
-              <div>
-                <label className="block mb-2 text-gray-800 dark:text-gray-300 font-medium">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="your.email@example.com"
-                  required
-                  className="w-full p-4 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 border border-gray-300 dark:border-gray-600 transition"
-                />
-              </div>
+                <div>
+                  <label className="block mb-2 text-gray-300 font-medium">Email Address</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <FiMail className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="your.email@example.com"
+                      required
+                      className="w-full pl-10 p-4 rounded-xl bg-gray-700 text-white outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600 transition"
+                    />
+                  </div>
+                </div>
 
-              <div>
-                <label className="block mb-2 text-gray-800 dark:text-gray-300 font-medium">Message</label>
-                <textarea
-                  name="message"
-                  rows="5"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Hello, I'd like to talk about..."
-                  required
-                  className="w-full p-4 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 border border-gray-300 dark:border-gray-600 transition"
-                />
-              </div>
+                <div>
+                  <label className="block mb-2 text-gray-300 font-medium">Message</label>
+                  <textarea
+                    name="message"
+                    rows="5"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Hello, I'd like to talk about..."
+                    required
+                    className="w-full p-4 rounded-xl bg-gray-700 text-white outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600 transition"
+                  />
+                </div>
 
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                disabled={isSubmitting}
-                className={`w-full py-4 px-6 rounded-lg font-medium text-white transition-all flex items-center justify-center gap-2 ${
-                  isSubmitting 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-lg'
-                }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <FiSend />
-                    Send Message
-                  </>
-                )}
-              </motion.button>
-            </form>
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting}
+                  className={`w-full py-4 px-6 rounded-xl font-medium text-white transition-all flex items-center justify-center gap-2 ${
+                    isSubmitting 
+                      ? 'bg-gray-600 cursor-not-allowed' 
+                      : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-lg'
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4zm2 5.29A7.96 7.96 0 014 12H0c0 3.04 1.13 5.82 3 7.94l3-2.65z"></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <FiSend />
+                      Send Message
+                    </>
+                  )}
+                </motion.button>
+              </form>
+            </div>
           </motion.div>
 
           {/* Contact Methods */}
@@ -204,9 +218,9 @@ const ContactPage = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="w-full lg:w-1/2"
           >
-            <div className="bg-gray-100 dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 h-full">
-              <h2 className="text-2xl font-bold text-center mb-8">
-                Other ways to connect
+            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 h-full">
+              <h2 className="text-2xl font-bold text-center mb-8 text-white">
+                Contact Information
               </h2>
 
               <motion.div
@@ -221,22 +235,28 @@ const ContactPage = () => {
                     variants={item}
                     whileHover={{ y: -5 }}
                     href={method.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${method.color} p-6 rounded-xl transition-all hover:shadow-md`}
+                    target={method.link?.startsWith('http') ? '_blank' : '_self'}
+                    rel={method.link?.startsWith('http') ? 'noopener noreferrer' : ''}
+                    className={`${method.color} p-6 rounded-xl transition-all hover:shadow-md border border-gray-700 group`}
                   >
-                    <div className={`w-12 h-12 rounded-full ${method.color} flex items-center justify-center mb-4`}>
+                    <div className={`w-12 h-12 rounded-full ${method.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                       <div className={method.iconColor}>
                         {method.icon}
                       </div>
                     </div>
-                    <h3 className="text-lg font-semibold mb-1">{method.title}</h3>
-                    <p className="text-gray-700 dark:text-gray-300">{method.info}</p>
+                    <h3 className="text-lg font-semibold mb-1 text-white">{method.title}</h3>
+                    <p className="text-gray-300">{method.info}</p>
                   </motion.a>
                 ))}
               </motion.div>
 
-           
+              {/* Additional Info */}
+              <div className="mt-8 p-6 bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-xl">
+                <h3 className="text-lg font-semibold mb-2 text-white">Response Time</h3>
+                <p className="text-gray-300">
+                  I typically respond to messages within 24 hours. For urgent inquiries, please use WhatsApp or call directly.
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
