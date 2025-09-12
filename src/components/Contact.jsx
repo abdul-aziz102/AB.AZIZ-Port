@@ -24,7 +24,7 @@ const handleSubmit = async (e) => {
   setIsSubmitting(true);
 
   try {
-    const res = await fetch("https://port-back-nine.vercel.app/contact", {
+    const res = await fetch("https://port-back-nine.vercel.app/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
