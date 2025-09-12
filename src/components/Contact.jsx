@@ -13,37 +13,38 @@ const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ 
-      ...formData, 
-      [e.target.name]: e.target.value 
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
-  try {
-    const res = await fetch("https://port-back-nine.vercel.app/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const res = await fetch("https://port-back-nine.vercel.app/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    const data = await res.json();
-    if (res.ok) {
-      alert("Message sent successfully!");
-      setFormData({ name: "", email: "", message: "" });
-    } else {
-      alert(data.message || "Something went wrong!");
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        alert(data.message || "Something went wrong!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to send message.");
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (err) {
-    console.error(err);
-    alert("Failed to send message.");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
 
   const contactMethods = [
     {
@@ -199,11 +200,10 @@ const handleSubmit = async (e) => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   disabled={isSubmitting}
-                  className={`w-full py-4 px-6 rounded-xl font-medium text-white transition-all flex items-center justify-center gap-2 ${
-                    isSubmitting 
-                      ? 'bg-gray-600 cursor-not-allowed' 
+                  className={`w-full py-4 px-6 rounded-xl font-medium text-white transition-all flex items-center justify-center gap-2 ${isSubmitting
+                      ? 'bg-gray-600 cursor-not-allowed'
                       : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-lg'
-                  }`}
+                    }`}
                 >
                   {isSubmitting ? (
                     <>
