@@ -19,18 +19,31 @@ const ContactPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    const res = await fetch("http://localhost:5000/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+    if (res.ok) {
       alert("Message sent successfully!");
-      setFormData({ name: '', email: '', message: '' });
-      setIsSubmitting(false);
-    }, 1500);
-  };
+      setFormData({ name: "", email: "", message: "" });
+    } else {
+      alert(data.message || "Something went wrong!");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Failed to send message.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const contactMethods = [
     {

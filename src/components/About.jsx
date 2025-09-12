@@ -222,7 +222,7 @@ const AboutPage = () => {
                 </div>
                 <div>
                   <div className="text-sm text-white">Email</div>
-                  <div className="text-white">your.email@example.com</div>
+                  <div className="text-white">abdulazizyousufzia@gmail.com</div>
                 </div>
               </motion.div>
               <motion.div 
@@ -236,7 +236,7 @@ const AboutPage = () => {
                 </div>
                 <div>
                   <div className="text-sm text-white">Location</div>
-                  <div className="text-white">San Francisco, CA</div>
+                  <div className="text-white">Karachi.PK</div>
                 </div>
               </motion.div>
             </motion.div>
@@ -299,7 +299,7 @@ const AboutPage = () => {
                 ></motion.div>
                 <div className="md:w-5/12 md:pl-8 mt-4 md:mt-0">
                   <p className="text-white">
-                    Build scalable web applications with modern frameworks. Implemented CI/CD pipelines and optimized performance.
+                    Build scalable web applications with modern frameworks.
                   </p>
                 </div>
               </motion.div>
@@ -310,7 +310,7 @@ const AboutPage = () => {
                 variants={timelineItemVariants}
               >
                 <div className="md:w-5/12 md:pr-8 md:text-right">
-                  <div className="text-sm text-white">2021 - 2023</div>
+                  <div className="text-sm text-white">2023 - 2025</div>
                   <h3 className="text-xl font-semibold text-white">Frontend Developer</h3>
                   <p className="text-white">Digital Creations</p>
                 </div>
