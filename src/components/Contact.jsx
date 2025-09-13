@@ -24,11 +24,12 @@ const ContactPage = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://port-back-nine.vercel.app/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+     await fetch("https://port-back-nine.vercel.app/contact", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(formData),
+});
+
 
 
       const data = await res.json();
