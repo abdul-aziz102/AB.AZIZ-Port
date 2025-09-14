@@ -49,11 +49,11 @@ const SkillsComponent = () => {
 
   const skillsData = {
     frontend: [
-      { name: 'HTML5', level: 100, icon: <FaHtml5 className="text-orange-500 text-3xl" />, color: 'from-orange-500 to-orange-600' },
-      { name: 'CSS3', level: 100, icon: <IoLogoCss3 className="text-blue-500 text-3xl" />, color: 'from-blue-500 to-blue-600' },
-      { name: 'JavaScript', level: 90, icon: <FaJsSquare className="text-yellow-500 text-3xl" />, color: 'from-yellow-500 to-yellow-600' },
+      { name: 'HTML', level: 100, icon: <FaHtml5 className="text-orange-500 text-3xl" />, color: 'from-orange-500 to-orange-600' },
+      { name: 'CSS', level: 90, icon: <IoLogoCss3 className="text-blue-500 text-3xl" />, color: 'from-blue-500 to-blue-600' },
+      { name: 'JavaScript', level: 60, icon: <FaJsSquare className="text-yellow-500 text-3xl" />, color: 'from-yellow-500 to-yellow-600' },
       { name: 'React', level: 85, icon: <FaReact className="text-blue-400 text-3xl" />, color: 'from-blue-400 to-cyan-500' },
-      { name: 'Next.js', level: 80, icon: <TbBrandNextjs className="text-white text-3xl" />, color: 'from-gray-800 to-gray-900' },
+      
       { name: 'Tailwind CSS', level: 95, icon: <TbBrandTailwind className="text-cyan-400 text-3xl" />, color: 'from-cyan-400 to-cyan-600' },
       { name: 'Bootstrap', level: 90, icon: <FaBootstrap className="text-purple-600 text-3xl" />, color: 'from-purple-600 to-purple-800' }
     ],
@@ -61,14 +61,14 @@ const SkillsComponent = () => {
       { name: 'Node.js', level: 85, icon: <FaNodeJs className="text-green-500 text-3xl" />, color: 'from-green-500 to-green-700' },
       { name: 'Express.js', level: 80, icon: <SiExpress className="text-gray-500 text-3xl" />, color: 'from-gray-500 to-gray-700' },
       { name: 'MongoDB', level: 75, icon: <SiMongodb className="text-green-600 text-3xl" />, color: 'from-green-600 to-green-800' },
-      { name: 'Python', level: 70, icon: <FaPython className="text-blue-600 text-3xl" />, color: 'from-blue-600 to-blue-800' },
-      { name: 'AWS', level: 65, icon: <FaAws className="text-orange-500 text-3xl" />, color: 'from-orange-500 to-orange-700' }
+      
+      
     ],
     tools: [
-      { name: 'Git', level: 90, icon: <FaGitAlt className="text-orange-600 text-3xl" />, color: 'from-orange-600 to-orange-700' },
-      { name: 'VS Code', level: 95, icon: <VscVscodeInsiders className="text-blue-500 text-3xl" />, color: 'from-blue-500 to-blue-700' },
-      { name: 'Figma', level: 85, icon: <FaFigma className="text-purple-500 text-3xl" />, color: 'from-purple-500 to-purple-700' },
-      { name: 'Postman', level: 80, icon: <SiPostman className="text-orange-500 text-3xl" />, color: 'from-orange-500 to-orange-600' },
+      { name: 'Git', level: 70, icon: <FaGitAlt className="text-orange-600 text-3xl" />, color: 'from-orange-600 to-orange-700' },
+      { name: 'VS Code', level: 75, icon: <VscVscodeInsiders className="text-blue-500 text-3xl" />, color: 'from-blue-500 to-blue-700' },
+      
+      { name: 'Postman', level: 60, icon: <SiPostman className="text-orange-500 text-3xl" />, color: 'from-orange-500 to-orange-600' },
       { name: 'Vercel', level: 85, icon: <SiVercel className="text-white text-3xl" />, color: 'from-gray-700 to-gray-900' }
     ]
   };
