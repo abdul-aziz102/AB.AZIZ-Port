@@ -345,6 +345,16 @@ const AboutPage = () => {
           <FiArrowUp className="text-xl" />
         </motion.button>
       )}
+     <div className='flex justify-center mt-5'>
+  <a 
+    href="/resume.pdf" 
+    download="AbdulAziz_Resume.pdf"
+    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-md"
+  >
+    Download Resume
+  </a>
+</div>
+
     </div>
   );
 };
