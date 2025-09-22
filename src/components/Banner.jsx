@@ -138,7 +138,7 @@ const PortfolioBanner = () => {
                style={{ transition: 'opacity 1s ease-in-out, transform 1s ease-in-out', transitionDelay: '0.9s' }}>
             <div className="absolute inset-0 rounded-full border-4 border-blue-400/30 overflow-hidden shadow-xl">
               <img
-                src="/front.jpg"
+                src="/cv.jpg"
                 alt="Profile"
                 className="w-full h-full object-cover rounded-full transform group-hover:scale-105 transition-transform duration-700"
               />
