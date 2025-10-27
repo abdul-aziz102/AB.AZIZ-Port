@@ -42,7 +42,7 @@ const ProjectsPage = () => {
       github: "https://github.com/abdul-aziz102/CodeMind",
       live: "https://pak-ai-code.vercel.app/",
       image: "/ai.jpg",
-      category: "frontend",
+      category: "fullstack",
     },
     {
       id: 3,

@@ -11,14 +11,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Skills } from "./pages/Skills";
 import ServicesPage from "./pages/Services";
 import OrbitingSkills from "./components/ui/orbiting-skills";
-import VoiceflowChat from "./components/VoiceflowChat";
+import ChatbotWidget from "./components/ChatbotWidget";
 
 const App = () => {
   return (
     <div className="w-full  bg-black text-white">
       <Router>
         <Navbar />
-        <VoiceflowChat />
+        <ChatbotWidget/>
         <Routes>
           <Route
             path="/"
