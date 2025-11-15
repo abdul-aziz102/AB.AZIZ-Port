@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from 'react';
 import { FiMail, FiMapPin, FiGithub, FiLinkedin, FiTwitter, FiArrowUp } from 'react-icons/fi';
 import { FaReact, FaNodeJs, FaDatabase } from 'react-icons/fa';
@@ -116,7 +117,7 @@ const AboutPage = () => {
             >
               <div className="absolute inset-0 rounded-full border-4 border-blue-500/30 overflow-hidden shadow-xl">
                 <img
-                  src="/cv.jpg"
+                  src="/cv image.jpeg"
                   alt="Profile"
                   className="w-full h-full object-cover rounded-full"
                 />
@@ -348,7 +349,7 @@ const AboutPage = () => {
      <div className='flex justify-center mt-5'>
   <a 
     href="/resume.pdf" 
-    download="AbdulAziz_Resume.pdf"
+    download="abdul aziz cv.pdf"
     className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-md"
   >
     Download Resume

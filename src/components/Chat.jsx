@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { FaRobot, FaUser, FaPaperPlane, FaRegClock, FaExternalLinkAlt } from "react-icons/fa";
@@ -52,6 +54,9 @@ Projects:
 - https://clothes-shop-zeta.vercel.app/
 - https://company-portfolio-pxdb.vercel.app/
 - https://home-academy-pi.vercel.app/
+At the and:
+Ask to client give me your contact info to work together
+.
 `;
 
   // Function to detect and convert URLs to clickable links
@@ -135,6 +140,7 @@ Projects:
         setIsTyping(false);
       }, 1000);
     }
+    console.log("Error occurred:", err);
   };
 
   const formatTime = (date) => {

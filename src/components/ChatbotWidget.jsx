@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { MessageCircle, X, Bot, Zap } from "lucide-react";
 import Chat from "./Chat";
