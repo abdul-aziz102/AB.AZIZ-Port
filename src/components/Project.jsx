@@ -30,7 +30,7 @@ const ProjectsPage = () => {
       tags: ["React", "Node.js", "MongoDB", "Tailwind"],
       github: "#",
       live: "https://ecommerce-pro-iota.vercel.app/",
-      image: "/ecohero.png",
+      image: "/update.png",
       category: "fullstack",
     },
     {
