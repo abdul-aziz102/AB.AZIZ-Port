@@ -1,301 +1,415 @@
 import React, { useEffect, useRef, useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { motion, useInView, useAnimationControls } from 'framer-motion';
+import { TypeAnimation } from 'react-type-animation';
 
 const PortfolioBanner = () => {
+  // eslint-disable-next-line no-unused-vars
   const [isVisible, setIsVisible] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [time, setTime] = useState(new Date());
   const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const controls = useAnimationControls();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (isInView) {
+      setIsVisible(true);
+      controls.start("visible");
     }
+  }, [isInView, controls]);
 
-    return () => observer.disconnect();
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const { clientX, clientY } = e;
+      const x = (clientX / window.innerWidth - 0.5) * 20;
+      const y = (clientY / window.innerHeight - 0.5) * 20;
+      setMousePosition({ x, y });
+    };
+
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.body.offsetHeight;
+      const winHeight = window.innerHeight;
+      const scrollPercent = scrollTop / (docHeight - winHeight);
+      setScrollProgress(scrollPercent);
+    };
+
+    const timer = setInterval(() => setTime(new Date()), 1000);
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(timer);
+    };
   }, []);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
+  const floatingVariants = {
+    float: {
+      y: [0, -10, 0],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
 
   return (
     <div 
       ref={sectionRef}
-      className="relative w-full min-h-screen pt-10 flex items-center bg-gradient-to-br text-white px-8 md:px-12 transition-colors duration-300 overflow-hidden"
+      className="relative w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white px-4 md:px-8 lg:px-12 overflow-hidden"
+      style={{
+        background: `radial-gradient(circle at ${mousePosition.x * 0.5 + 50}% ${mousePosition.y * 0.5 + 50}%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)`,
+      }}
     >
-      {/* Background elements with animation */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-10">
-        <div className={`absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-400 filter blur-3xl ${isVisible ? 'animate-pulse-slow' : 'opacity-0'}`} 
-             style={{ transition: 'opacity 1.5s ease-in-out, transform 2s ease-in-out' }}></div>
-        <div className={`absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-purple-500 filter blur-3xl ${isVisible ? 'animate-pulse-slow' : 'opacity-0'}`} 
-             style={{ transition: 'opacity 1.5s ease-in-out 0.5s, transform 2s ease-in-out 0.5s' }}></div>
-      </div>
-      
-      {/* Floating tech icons with enhanced animation */}
-      <div className={`absolute top-1/4 left-1/5 opacity-20 ${isVisible ? 'animate-float' : 'opacity-0'}`}
-           style={{ transition: 'opacity 0.8s ease-in-out 1s' }}>
-        <TechIcon icon="react" size={40} />
-      </div>
-      <div className={`absolute top-1/3 right-1/4 opacity-20 ${isVisible ? 'animate-float-delay' : 'opacity-0'}`}
-           style={{ transition: 'opacity 0.8s ease-in-out 1.2s' }}>
-        <TechIcon icon="node" size={50} />
-      </div>
-      <div className={`absolute bottom-1/4 left-1/3 opacity-20 ${isVisible ? 'animate-float-delay-2' : 'opacity-0'}`}
-           style={{ transition: 'opacity 0.8s ease-in-out 1.4s' }}>
-        <TechIcon icon="js" size={30} />
-      </div>
-      <div className={`absolute bottom-1/3 right-1/5 opacity-20 ${isVisible ? 'animate-float' : 'opacity-0'}`}
-           style={{ transition: 'opacity 0.8s ease-in-out 1.6s' }}>
-        <TechIcon icon="css" size={45} />
-      </div>
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSIwJSIgY3k9IjAlIiByPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMDA3Y2ZmIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzgzY2E4IiBzdG9wLW9wYWNpdHk9Ii4wNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')] opacity-20"></div>
+        
+        {/* Animated grid */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)`,
+          backgroundSize: '50px 50px',
+          transform: `translate(${mousePosition.x * 0.1}px, ${mousePosition.y * 0.1}px)`,
+          transition: 'transform 0.1s linear'
+        }}></div>
 
-      {/* Content */}
-      <div className="relative z-10 mt-14 h-full flex flex-col lg:flex-row items-center justify-between gap-8 max-w-6xl mx-auto w-full">
-        {/* Text content */}
-        <div className="lg:w-1/2">
-          <div className={`mb-2 flex items-center gap-2 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-               style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.2s' }}>
-            <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600"></div>
-            <span className="text-sm font-medium text-blue-400">
-              AVAILABLE FOR FREELANCE
-            </span>
-          </div>
-          
-          <h1 className={`text-4xl md:text-6xl font-bold text-white mb-4 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-              style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.3s' }}>
-            <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              Hello, I'm
-            </span>
-            <br />
-            <span className="text-white relative inline-block">
-              Abdul Aziz
-              <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></span>
-            </span>
-          </h1>
-
-          <h2 className={`text-xl md:text-2xl font-medium text-gray-300 mb-6 relative pl-4 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2/3 before:bg-gradient-to-b before:from-blue-500 before:to-purple-600 before:rounded-full ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-              style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.4s' }}>
-            Full Stack Developer & UI/UX Designer
-          </h2>
-
-          <p className={`text-gray-400 mb-8 text-lg max-w-lg ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-             style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.5s' }}>
-            I build exceptional digital experiences with modern web technologies. 
-            Currently specializing in <span className="font-medium text-blue-400">React</span>,{' '}
-            <span className="font-medium text-purple-400">Node.js</span>, and{' '}
-            <span className="font-medium text-green-400">UI/UX Design</span>.
-          </p>
-
-          <div className={`flex flex-wrap gap-4 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-               style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.6s' }}>
-            <a href="/projects">
-              <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-blue-500/30 flex items-center gap-2 group">
-                <span>View My Work</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
-                </svg>
-              </button>
-            </a>
-            <a href="/contact">
-              <button className="px-6 py-3 border border-gray-600 text-white font-medium rounded-lg hover:bg-gray-800 transition-all duration-300 flex items-center gap-2 group">
-                <span>Contact Me</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                </svg>
-              </button>
-            </a>
-          </div>
-
-          {/* Social links */}
-          <div className={`mt-8 flex items-center gap-4 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-               style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: '0.7s' }}>
-            <p className="text-gray-400 text-sm">Follow me:</p>
-            <div className="flex gap-3">
-              {['github', 'linkedin', 'twitter', 'dribbble'].map((social, index) => (
-                <a 
-                  key={social}
-                  href={`https://${social}.com`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`text-gray-400 hover:text-blue-400 transition-all duration-300 transform hover:-translate-y-1 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-                  style={{ transition: 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out', transitionDelay: `${0.8 + index * 0.1}s` }}
-                >
-                  <SocialIcon platform={social} size={20} />
-                </a>
-              ))}
-            </div>
-          </div>
+        {/* Particle system */}
+        <div className="absolute inset-0">
+          {Array.from({ length: 50 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-blue-400 rounded-full"
+              initial={{ opacity: 0 }}
+              animate={{
+                x: Math.sin(i) * 100 + mousePosition.x * 2,
+                y: Math.cos(i) * 100 + mousePosition.y * 2,
+                opacity: [0, 0.5, 0],
+              }}
+              transition={{
+                duration: 2 + Math.random() * 3,
+                repeat: Infinity,
+                delay: i * 0.1
+              }}
+              style={{
+                left: `${(i * 20) % 100}%`,
+                top: `${(i * 15) % 100}%`,
+              }}
+            />
+          ))}
         </div>
+      </div>
 
-        {/* Image with enhanced animation */}
-        <div className="lg:w-1/2 flex justify-center lg:justify-end relative">
-          <div className={`relative group w-72 h-72 md:w-80 md:h-80 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-               style={{ transition: 'opacity 1s ease-in-out, transform 1s ease-in-out', transitionDelay: '0.9s' }}>
-            <div className="absolute inset-0 rounded-full border-4 border-blue-400/30 overflow-hidden shadow-xl">
-              <img
-                src="/cv image.jpeg"
-                alt="Profile"
-                className="w-full h-full object-cover rounded-full transform group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-            <div className="absolute inset-0 rounded-full border-4 border-transparent group-hover:border-blue-400/50 transition-all duration-500 pointer-events-none"></div>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-            <div className="absolute -inset-4 rounded-full bg-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-            
-            {/* Decorative dots */}
-            <div className="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-purple-500/10 blur-md animate-pulse"></div>
-            <div className="absolute -bottom-4 -right-4 w-20 h-20 rounded-full bg-blue-500/10 blur-md animate-pulse" style={{ animationDelay: '1s' }}></div>
-            
+      {/* Floating 3D elements */}
+      <motion.div
+        className="absolute top-20 left-10 w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 opacity-20 blur-xl"
+        animate={{
+          x: [0, 20, 0],
+          y: [0, -20, 0],
+          rotate: 360,
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-10 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 opacity-10 blur-xl"
+        animate={{
+          x: [0, -30, 0],
+          y: [0, 30, 0],
+          rotate: -360,
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
+
+      {/* Main content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={controls}
+          className="grid lg:grid-cols-2 gap-12 items-center"
+        >
+          {/* Left column */}
+          <div className="space-y-8">
             {/* Badge */}
-            <div className="absolute -bottom-2 -right-2 bg-gray-800 px-4 py-2 rounded-full shadow-md flex items-center gap-2 border border-gray-700 transform hover:scale-105 transition-transform duration-300">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-sm font-medium text-gray-300">Available</span>
-            </div>
+            <motion.div
+              variants={itemVariants}
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/30 backdrop-blur-sm"
+            >
+              <div className="relative">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-ping absolute"></div>
+                <div className="w-2 h-2 bg-green-500 rounded-full relative"></div>
+              </div>
+              <span className="text-sm font-medium text-blue-300">
+                OPEN FOR COLLABORATION
+              </span>
+             
+            </motion.div>
+
+            {/* Main heading */}
+            <motion.h1
+              variants={itemVariants}
+              className="text-5xl md:text-7xl font-bold leading-tight"
+            >
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                Hello, I'm
+              </span>
+              <span className="block mt-2 relative">
+                <span className="relative z-10">Abdul Aziz</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 blur-xl opacity-50"></span>
+              </span>
+            </motion.h1>
+
+            {/* Animated typing */}
+            <motion.div variants={itemVariants}>
+              <TypeAnimation
+                sequence={[
+                  'Full Stack Developer',
+                  2000,
+                  'UI/UX Designer',
+                  2000,
+                  'Problem Solver',
+                  2000,
+                  'Tech Enthusiast',
+                  2000,
+                ]}
+                wrapper="div"
+                speed={50}
+                repeat={Infinity}
+                className="text-2xl md:text-3xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300"
+              />
+            </motion.div>
+
+            {/* Description */}
+            <motion.p
+              variants={itemVariants}
+              className="text-xl text-gray-300 leading-relaxed max-w-2xl"
+            >
+              I craft <span className="text-blue-400 font-semibold">immersive digital experiences</span> that blend cutting-edge technology with elegant design. Currently pushing boundaries with <span className="text-purple-400">React.js.</span>
+            </motion.p>
+
+            {/* Stats */}
+            <motion.div
+              variants={itemVariants}
+              className="grid grid-cols-3 gap-4 max-w-md"
+            >
+              {[
+                { value: '50+', label: 'Projects' },
+                { value: '4+', label: 'Month Exp' },
+                { value: '100%', label: 'Satisfaction' },
+              ].map((stat, index) => (
+                <div
+                  key={index}
+                  className="p-4 rounded-xl bg-gradient-to-b from-gray-900/50 to-black/50 border border-gray-800 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300 group"
+                >
+                  <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 group-hover:scale-110 transition-transform duration-300">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-gray-400 mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+              <motion.a
+                href="/projects"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative px-8 py-4 rounded-xl overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:from-blue-500 group-hover:to-purple-500 transition-all duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></div>
+                <div className="relative flex items-center gap-3 text-lg font-semibold">
+                  <span>Explore Projects</span>
+                  <motion.svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </motion.svg>
+                </div>
+              </motion.a>
+
+              <motion.a
+                href="/contact"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group px-8 py-4 rounded-xl border-2 border-gray-700 hover:border-blue-500 bg-black/30 backdrop-blur-sm hover:bg-blue-900/20 transition-all duration-300"
+              >
+                <div className="flex items-center gap-3 text-lg font-semibold">
+                  <span>Let's Connect</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:rotate-12 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                  </svg>
+                </div>
+              </motion.a>
+            </motion.div>
+
+            {/* Tech stack */}
+            <motion.div variants={itemVariants} className="pt-8">
+              <p className="text-gray-400 text-sm mb-4">Tech Stack:</p>
+              <div className="flex flex-wrap gap-3">
+                {['React' , 'Node.js', 'Tailwind' , 'MongoDB' , 'Express'].map((tech, index) => (
+                  <motion.span
+                    key={tech}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ y: -2 }}
+                    className="px-4 py-2 rounded-lg bg-gray-900/50 border border-gray-800 text-sm text-gray-300 hover:text-white hover:border-blue-500/50 transition-all duration-300 cursor-default"
+                  >
+                    {tech}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
           </div>
-        </div>
+
+          {/* Right column - Profile image */}
+          <motion.div
+            variants={itemVariants}
+            className="relative flex justify-center"
+          >
+            <div className="relative group">
+              {/* Outer glow */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+              
+              {/* Main image container */}
+              <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-transparent bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-1">
+                <div className="relative w-full h-full rounded-full overflow-hidden bg-gray-900">
+                  <img
+                    src="/cv image.jpeg"
+                    alt="Abdul Aziz"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+              </div>
+
+              {/* Floating elements around image */}
+              <motion.div
+                className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 opacity-20 blur-lg"
+                animate={floatingVariants}
+              />
+              <motion.div
+                className="absolute -bottom-4 -left-4 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-20 blur-lg"
+                animate={floatingVariants}
+                transition={{ delay: 1 }}
+              />
+
+              {/* Interactive code snippet */}
+              <motion.div
+                className="absolute -right-32 top-1/4 w-64 p-4 rounded-xl bg-gray-900/90 backdrop-blur-sm border border-gray-800 shadow-2xl"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.2 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                  <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  <div className="text-xs text-gray-400 ml-auto">developer.js</div>
+                </div>
+                <pre className="text-xs  text-gray-300 font-mono">
+                  <code>{`
+const developer = {
+  name: "Abdul Aziz",
+  role: "Full Stack Dev",
+  skills: ["React", "Node", "UI/UX"],
+  status: "Coding...",
+  getMotivation() {
+    return "Building the future";
+  }
+}`}</code>
+                </pre>
+              </motion.div>
+
+              {/* Location badge */}
+              <motion.div
+                className="absolute -left-4 bottom-8 px-4 py-2 rounded-full bg-gray-900/90 backdrop-blur-sm border border-gray-800 flex items-center gap-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.4 }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                </svg>
+                <span className="text-sm text-gray-300">Remote • Worldwide</span>
+              </motion.div>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
 
-      {/* Add custom animation styles */}
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        @keyframes float {
-          0% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-          100% {
-            transform: translateY(0px);
-          }
-        }
-        @keyframes pulseSlow {
-          0% {
-            transform: scale(1);
-            opacity: 0.7;
-          }
-          50% {
-            transform: scale(1.05);
-            opacity: 0.8;
-          }
-          100% {
-            transform: scale(1);
-            opacity: 0.7;
-          }
-        }
-        .animate-fade-in-up {
-          animation: fadeInUp 0.8s forwards;
-        }
-        .animate-fade-in {
-          animation: fadeIn 1s forwards;
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        .animate-float-delay {
-          animation: float 7s ease-in-out infinite;
-          animation-delay: 1s;
-        }
-        .animate-float-delay-2 {
-          animation: float 5s ease-in-out infinite;
-          animation-delay: 2s;
-        }
-        .animate-pulse-slow {
-          animation: pulseSlow 4s ease-in-out infinite;
-        }
-      `}</style>
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+      >
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-sm text-gray-400">Scroll to explore</span>
+          <div className="w-6 h-10 border-2 border-gray-600 rounded-full p-1">
+            <motion.div
+              className="w-1.5 h-1.5 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full mx-auto"
+              animate={{ y: [0, 16, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Progress bar */}
+      <div className="fixed top-0 left-0 w-full h-1 bg-gray-900/50 z-50">
+        <motion.div
+          className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+          initial={{ width: "0%" }}
+          animate={{ width: `${scrollProgress * 100}%` }}
+          transition={{ duration: 0.1 }}
+        />
+      </div>
     </div>
   );
-};
-
-// Helper component for tech icons
-const TechIcon = ({ icon, size = 24 }) => {
-  const icons = {
-    react: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width={size} height={size}>
-        <path fill="#00d8ff" d="M24,34C11.1,34,1,29.6,1,24s10.1-10,23-10s23,4.4,23,10S36.9,34,24,34z M24,16c-12.6,0-21,4.1-21,8s8.4,8,21,8s21-4.1,21-8S36.6,16,24,16z"/>
-        <path fill="#00d8ff" d="M15.1,44c-1.1,0-2.1-0.3-2.9-0.9c-2.1-1.6-2.4-4.9-0.8-7.3l9.2-15.4c1.6-2.7,4.4-2.7,6,0l9.2,15.4c1.6,2.7,1.3,6-0.8,7.6c-2.1,1.6-5.3,1.3-6.9-0.8L24,30.7l-8.9,14.9C14.1,47,14.5,48,15.1,48L15.1,44z"/>
-        <path fill="#00d8ff" d="M32.9,44c0.6,0,1-1,0.8-1.4L24,27.7l-9.7,16.1c-0.2,0.4,0.2,1.2,0.8,1.2c0.6,0,1.4-0.2,1.7-0.6L24,30.7l8.9,14.9C33.5,46,34.3,48,32.9,48L32.9,44z"/>
-        <path fill="#00d8ff" d="M15.1,4c1.1,0,2.1,0.3,2.9,0.9c2.1,1.6,2.4,4.9,0.8,7.3l-9.2,15.4c-1.6,2.7-4.4,2.7-6,0l-9.2-15.4c-1.6-2.7-1.3-6,0.8-7.6C5.6,0.8,8.8,1.1,10.4,4l8.9,14.9L24,4.3L15.1,4z"/>
-        <path fill="#00d8ff" d="M32.9,4c-0.6,0-1,1-0.8,1.4L24,20.3l9.7-16.1c0.2-0.4-0.2-1.2-0.8-1.2c-0.6,0-1.4,0.2-1.7,0.6L24,17.3l-8.9-14.9C14.5,2,13.7,0,15.1,0L32.9,4z"/>
-      </svg>
-    ),
-    node: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width={size} height={size}>
-        <path fill="#8bc34a" d="M24,4C13,4,4,13,4,24s9,20,20,20s20-9,20-20S35,4,24,4z"/>
-        <path fill="#fff" d="M24,10c7.7,0,14,6.3,14,14s-6.3,14-14,14S10,31.7,10,24S16.3,10,24,10z"/>
-        <path fill="#4caf50" d="M24,8c8.8,0,16,7.2,16,16s-7.2,16-16,16S8,32.8,8,24S15.2,8,24,8z M24,12c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12S30.6,12,24,12z"/>
-        <path fill="#388e3c" d="M24,14c5.5,0,10,4.5,10,10s-4.5,10-10,10s-10-4.5-10-10S18.5,14,24,14z"/>
-        <path fill="#8bc34a" d="M24,16c4.4,0,8,3.6,8,8s-3.6,8-8,8s-8-3.6-8-8S19.6,16,24,16z"/>
-      </svg>
-    ),
-    js: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width={size} height={size}>
-        <path fill="#ffd600" d="M6,42V6h36v36H6z"/>
-        <path fill="#000001" d="M29.538 32.947c.692 1.124 1.444 2.201 3.037 2.201 1.338 0 2.04-.665 2.04-1.585 0-1.101-.726-1.492-2.198-2.133l-.807-.344c-2.329-.988-3.878-2.226-3.878-4.841 0-2.41 1.845-4.244 4.728-4.244 2.053 0 3.528.711 4.592 2.573l-2.514 1.607c-.553-.988-1.151-1.377-2.078-1.377-.946 0-1.545.597-1.545 1.377 0 .964.6 1.354 1.985 1.951l.807.344C36.452 29.645 38 30.839 38 33.523 38 36.415 35.716 38 32.65 38c-2.999 0-4.702-1.505-5.65-3.368L29.538 32.947zM17.952 33.029c.506.906 1.275 1.603 2.381 1.603 1.058 0 1.667-.418 1.667-2.043V22h3.333v11.101c0 3.367-1.953 4.899-4.805 4.899-2.577 0-4.437-1.746-5.195-3.368L17.952 33.029z"/>
-      </svg>
-    ),
-    css: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width={size} height={size}>
-        <path fill="#0277BD" d="M41,5H7l3,34l14,4l14-4L41,5L41,5z"/>
-        <path fill="#039BE5" d="M24 8v31.9l11.2-3.2L37.7 8z"/>
-        <path fill="#FFF" d="M33.1 13H24v4h4.9l-.3 4H24v4h4.4l-.3 4.5-4.1 1.4v4.2l7.9-2.6.7-11.5z"/>
-        <path fill="#EEE" d="M24,13v4h-8.9l-0.3-4H24z M19.4,21l0.2,4H24v-4H19.4z M19.8,27h-4l0.3,5.5l7.9,2.6v-4.2l-4.1-1.4L19.8,27z"/>
-      </svg>
-    )
-  };
-  
-  return icons[icon] || null;
-};
-
-// Helper component for social icons
-const SocialIcon = ({ platform, size = 24 }) => {
-  const icons = {
-    github: (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-      </svg>
-    ),
-    linkedin: (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.790-1.75-1.764s.784-1.764 1.75-1.764 1.75.790 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-      </svg>
-    ),
-    twitter: (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-      </svg>
-    ),
-    dribbble: (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm9.847 7.929c-.634 3.223-2.475 5.947-5.115 7.453.002-.166.004-.332.004-.499 0-.076-.001-.151-.002-.227.798-.585 1.493-1.281 2.136-2.047 1.034.482 1.79 1.416 2.101 2.534.237-.18.462-.375.676-.583-.408-.93-1.098-1.714-1.943-2.251 1.619-1.833 2.586-4.271 2.586-6.912 0-.115-.003-.229-.007-.342.872.649 1.62 1.493 2.171 2.533-.207-.616-.514-1.185-.896-1.699zm-3.848-1.52c1.152.693 2.086 1.676 2.774 2.832.088-.006.176-.009.265-.009 2.213 0 4.212.913 5.656 2.383-.146-2.958-1.553-5.466-3.737-6.787-.898 1.035-2.338 1.913-4.958 1.581zm-6.269 1.137c-3.167.355-5.91 2.477-6.797 5.495-1.662-2.333-2.616-5.379-2.616-8.664 0-.198.005-.395.014-.59.984-.165 1.998-.251 3.036-.251 3.170 0 6.119 1.097 8.428 2.925-.98-.122-1.945-.184-2.913-.184-.378 0-.755.014-1.132.042zm-5.142 13.414c-.372-1.21-.574-2.494-.574-3.824 0-1.045.108-2.063.312-3.041 1.14.772 2.529 1.239 4.032 1.239 1.645 0 3.158-.537 4.389-1.439.272 1.021.409 2.107.409 3.239 0 1.532-.328 2.982-.911 4.291-2.056-.613-3.868-1.974-4.657-3.465zm5.735 3.912c1.088-1.587 1.821-3.522 2.093-5.588.889.268 1.753.612 2.57 1.028-.409 2.054-1.693 3.814-3.445 4.843-.408-.095-.799-.209-1.180-.341.017-.318.026-.639.026-.961 0-.311-.009-.618-.024-.921.362.12.732.228 1.108.323.002.016.004.032.004.048 0 .325-.012.647-.034.967-.706-.26-1.364-.611-1.958-1.039zm7.056-1.678c-.646-.382-1.336-.708-2.063-.971.19-1.619.19-3.257 0-4.876.727-.263 1.417-.589 2.063-.971 2.086 1.482 3.426 3.813 3.426 6.409 0 2.596-1.34 4.927-3.426 6.409zm4.122-8.409c-.335.94-.929 1.756-1.71 2.386-.045-.033-.089-.068-.134-.101-1.185-1.147-2.729-1.882-4.433-2.050.673-2.266.673-4.571 0-6.837 1.704-.168 3.248-.903 4.433-2.050.045-.033.089-.068.134-.101.781.63 1.375 1.446 1.71 2.386.335.94.517 1.963.517 3.036s-.182 2.096-.517 3.036z"/>
-      </svg>
-    )
-  };
-  
-  return icons[platform] || null;
 };
 
 export default PortfolioBanner;

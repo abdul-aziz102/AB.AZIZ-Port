@@ -12,6 +12,7 @@ import { Skills } from "./pages/Skills";
 import ServicesPage from "./pages/Services";
 import OrbitingSkills from "./components/ui/orbiting-skills";
 import ChatbotWidget from "./components/ChatbotWidget";
+import AddProject from "./Admin/AddProject";
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/admin/add-project" element={<AddProject />} />
         </Routes>
         <Footer />
       </Router>

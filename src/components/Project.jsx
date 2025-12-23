@@ -35,6 +35,7 @@ const ProjectsPage = () => {
     },
     {
       id: 2,
+      
       title: "AI Chat Bot",
       description:
         "A chatbot using Google's Gemini API, allowing users to ask questions and receive AI-generated responses.",

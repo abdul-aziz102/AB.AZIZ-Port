@@ -45,6 +45,7 @@ const SkillsComponent = () => {
         setAnimatedSkills([]);
       };
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible, activeCategory]);
 
   const skillsData = {
@@ -179,7 +180,7 @@ const SkillsComponent = () => {
       </div>
 
       {/* Custom Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes fadeInUp {
           from {
             opacity: 0;

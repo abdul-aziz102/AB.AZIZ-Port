@@ -5,6 +5,7 @@ import OrbitingSkills from '../components/ui/orbiting-skills'
 export const Skills = () => {
   return (
     <div>
+      
         <SkillsComponent />
         <OrbitingSkills />
     </div>
