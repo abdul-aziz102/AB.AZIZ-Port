@@ -8,6 +8,7 @@ const PortfolioBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollProgress, setScrollProgress] = useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [time, setTime] = useState(new Date());
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
@@ -316,7 +317,7 @@ const PortfolioBanner = () => {
               <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-transparent bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-1">
                 <div className="relative w-full h-full rounded-full overflow-hidden bg-gray-900">
                   <img
-                    src="/cv image.jpeg"
+                    src="/gemini.png"
                     alt="Abdul Aziz"
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                   />
