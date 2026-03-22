@@ -22,6 +22,17 @@ const ProjectsPage = () => {
   }, []);
 
   const projects = [
+     {
+      id: 1,
+      title: "E-Commerce Platform",
+      description:
+        "Full-featured online grocery store with payment integration, product management, and user authentication, Admin pannel",
+      tags: ["Next", "Node.js", "MongoDB", "Tailwind"],
+      github: "#",
+      live: "https://fresh-mart-mu-ecru.vercel.app/",
+      image: "/grocery.png",
+      category: "fullstack",
+    },
     {
       id: 1,
       title: "E-Commerce Platform",
@@ -36,46 +47,18 @@ const ProjectsPage = () => {
     {
       id: 2,
       
-      title: "AI Chat Bot",
+      title: "Electric Solution",
       description:
         "A chatbot using Google's Gemini API, allowing users to ask questions and receive AI-generated responses.",
       tags: ["React", "Tailwind", "Framer Motion"],
-      github: "https://github.com/abdul-aziz102/CodeMind",
-      live: "https://pak-ai-code.vercel.app/",
-      image: "/ai.jpg",
+      github: "https://github.com/abdul-aziz102/Electric_Solution",
+      live: "https://electric-solution.vercel.app/",
+      image: "/electric.png",
       category: "fullstack",
     },
-    {
-      id: 3,
-      title: "Learnify Website",
-      description:
-        "A full-stack educational platform where students can sign up, log in, and access English learning content.",
-      tags: ["React", "Tailwind", "Node.js", "Express", "MongoDB"],
-      github: "#",
-      live: "https://zippy-zabaione-6406a6.netlify.app/",
-      image: "/learnify.png",
-      category: "fullstack",
-    },
-    {
-      id: 4,
-      title: "English Learning Website",
-      description:
-        "A modern educational site with English stories, poems, news, and articles. Includes search functionality.",
-      tags: ["React", "Tailwind", "Node.js", "Express", "MongoDB"],
-      live: "https://guileless-sfogliatella-ac168a.netlify.app/",
-      image: "/english .png",
-      category: "fullstack",
-    },
-    {
-      id: 5,
-      title: "E-commerce Website",
-      description:
-        "Responsive e-commerce website with authentication, product management, and payments.",
-      tags: ["React", "Tailwind", "Node.js", "Express", "MongoDB"],
-      live: "https://clothes-shop-zeta.vercel.app/",
-      image: "/cloth.png",
-      category: "fullstack",
-    },
+  
+  
+   
     {
       id: 6,
       title: "Company Portfolio",
