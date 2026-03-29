@@ -54,7 +54,7 @@ const ServicesPage = () => {
       title: "E-commerce Website",
       description:
         "Full-featured online stores with secure payment processing and inventory management.",
-
+      popular: true,
       features: [
         "Product Management",
         "Payment Gateway",
@@ -203,12 +203,25 @@ const ServicesPage = () => {
           {filteredServices.map((service, index) => (
             <div
               key={index}
-              className={`relative bg-gray-800 rounded-xl p-6 border border-gray-700 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group overflow-hidden ${isVisible ? "animate-fade-in-up" : "opacity-0"
+              className={`relative bg-gray-800 rounded-xl p-6 border ${service.popular ? 'border-purple-500/50 ring-1 ring-purple-500/20' : 'border-gray-700'} transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group overflow-hidden ${isVisible ? "animate-fade-in-up" : "opacity-0"
                 }`}
-              style={{ transitionDelay: `${0.3 + index * 0.1}s` }}
+              style={{
+                transitionDelay: `${0.3 + index * 0.1}s`,
+                transform: hoveredService === index ? 'perspective(1000px) rotateY(-2deg) rotateX(2deg) translateY(-8px)' : '',
+                transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
+              }}
               onMouseEnter={() => setHoveredService(index)}
               onMouseLeave={() => setHoveredService(null)}
             >
+              {/* Popular badge */}
+              {service.popular && (
+                <div className="absolute -top-0 right-4 z-20">
+                  <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-b-lg shadow-lg">
+                    MOST POPULAR
+                  </div>
+                </div>
+              )}
+
               {/* Gradient background */}
               <div
                 className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}

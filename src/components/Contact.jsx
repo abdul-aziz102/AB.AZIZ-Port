@@ -13,6 +13,12 @@ const ContactPage = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState({ show: false, type: '', message: '' });
+
+  const showToast = (type, message) => {
+    setToast({ show: true, type, message });
+    setTimeout(() => setToast({ show: false, type: '', message: '' }), 4000);
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -26,24 +32,22 @@ const ContactPage = () => {
     setIsSubmitting(true);
 
     try {
-     await fetch("https://port-back-nine.vercel.app/contact", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(formData),
-});
-
-
+      const res = await fetch("https://port-back-nine.vercel.app/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
       const data = await res.json();
       if (res.ok) {
-        alert("Message sent successfully!");
+        showToast('success', 'Message sent successfully!');
         setFormData({ name: "", email: "", message: "" });
       } else {
-        alert(data.message || "Something went wrong!");
+        showToast('error', data.message || "Something went wrong!");
       }
     } catch (err) {
       console.error(err);
-      alert("Failed to send message.");
+      showToast('error', "Failed to send message. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -120,6 +124,24 @@ const ContactPage = () => {
 
   return (
     <div className="min-h-screen pt-24 pb-16 bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white px-6 py-12 md:px-12">
+      {/* Toast Notification */}
+      {toast.show && (
+        <motion.div
+          initial={{ opacity: 0, y: -50, x: '-50%' }}
+          animate={{ opacity: 1, y: 0, x: '-50%' }}
+          exit={{ opacity: 0, y: -50 }}
+          className={`fixed top-6 left-1/2 z-50 px-6 py-3 rounded-xl shadow-2xl backdrop-blur-sm border flex items-center gap-3 ${
+            toast.type === 'success'
+              ? 'bg-green-900/80 border-green-500/50 text-green-200'
+              : 'bg-red-900/80 border-red-500/50 text-red-200'
+          }`}
+        >
+          <span className="text-lg">{toast.type === 'success' ? '✓' : '✕'}</span>
+          <span className="font-medium">{toast.message}</span>
+          <button onClick={() => setToast({ show: false, type: '', message: '' })} className="ml-2 opacity-60 hover:opacity-100">✕</button>
+        </motion.div>
+      )}
+
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

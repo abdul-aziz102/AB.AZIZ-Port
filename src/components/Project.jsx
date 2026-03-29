@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FiGithub, FiExternalLink, FiFilter } from "react-icons/fi";
+import { FiGithub, FiExternalLink, FiFilter, FiArrowRight } from "react-icons/fi";
 
 const ProjectsPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,7 +34,7 @@ const ProjectsPage = () => {
       category: "fullstack",
     },
     {
-      id: 1,
+      id: 2,
       title: "E-Commerce Platform",
       description:
         "Full-featured online store with payment integration, product management, and user authentication.",
@@ -45,11 +45,10 @@ const ProjectsPage = () => {
       category: "fullstack",
     },
     {
-      id: 2,
-      
+      id: 3,
       title: "Electric Solution",
       description:
-        "A chatbot using Google's Gemini API, allowing users to ask questions and receive AI-generated responses.",
+        "Modern electrical services website with animated UI, service showcases, and an interactive contact system.",
       tags: ["React", "Tailwind", "Framer Motion"],
       github: "https://github.com/abdul-aziz102/Electric_Solution",
       live: "https://electric-solution.vercel.app/",
@@ -75,8 +74,8 @@ const ProjectsPage = () => {
       description:
         "Online learning platform with authentication, course management, and a contact form.",
       tags: ["React", "Tailwind", "Node.js", "Express", "MongoDB"],
-      live: "https://home-academy-p.vercel.app/",
-      image: "/home.png",
+      live: "https://home-academy-pi.vercel.app/",
+      image: "/home1.png",
       category: "fullstack",
     },
   ];
@@ -167,6 +166,10 @@ const ProjectsPage = () => {
                   src={project.image}
                   alt={project.title}
                   className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' fill='%231f2937'%3E%3Crect width='400' height='200'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%236b7280' font-size='16'%3EImage Unavailable%3C/text%3E%3C/svg%3E";
+                  }}
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <div className="flex gap-3">
@@ -231,6 +234,21 @@ const ProjectsPage = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* View All Projects */}
+        <div className="text-center mt-12">
+          <a
+            href="https://github.com/abdul-aziz102?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:-translate-y-1 ${
+              isVisible ? "animate-fade-in-up" : "opacity-0"
+            }`}
+          >
+            View All Projects on GitHub
+            <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+          </a>
         </div>
       </div>
     </div>

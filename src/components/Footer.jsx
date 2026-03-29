@@ -39,9 +39,9 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: <FaGithub />, url: "https://github.com/yourusername", color: "hover:text-gray-300" },
-    { icon: <FaLinkedin />, url: "https://linkedin.com/in/yourusername", color: "hover:text-blue-400" },
-    { icon: <FaInstagram />, url: "https://instagram.com/yourusername", color: "hover:text-pink-400" },
+    { icon: <FaGithub />, url: "https://github.com/abdul-aziz102", color: "hover:text-gray-300" },
+    { icon: <FaLinkedin />, url: "https://www.linkedin.com/in/abdul-aziz-yousufzia-a98340356", color: "hover:text-blue-400" },
+    { icon: <FaInstagram />, url: "https://instagram.com/abdul_aziz", color: "hover:text-pink-400" },
   ];
 
   const quickLinks = [

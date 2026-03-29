@@ -1,7 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, useInView, useAnimationControls } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
+
+const useCountUp = (end, duration = 2000, startCounting = false) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(null);
+
+  useEffect(() => {
+    if (!startCounting) return;
+    const numericEnd = parseInt(end);
+    if (isNaN(numericEnd)) { setCount(end); return; }
+
+    let startTime = null;
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      setCount(Math.floor(eased * numericEnd));
+      if (progress < 1) countRef.current = requestAnimationFrame(step);
+    };
+    countRef.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(countRef.current);
+  }, [end, duration, startCounting]);
+
+  return count;
+};
 
 const PortfolioBanner = () => {
   // eslint-disable-next-line no-unused-vars
@@ -226,21 +250,9 @@ const PortfolioBanner = () => {
               variants={itemVariants}
               className="grid grid-cols-3 gap-4 max-w-md"
             >
-              {[
-                { value: '50+', label: 'Projects' },
-                { value: '4+', label: 'Month Exp' },
-                { value: '100%', label: 'Satisfaction' },
-              ].map((stat, index) => (
-                <div
-                  key={index}
-                  className="p-4 rounded-xl bg-gradient-to-b from-gray-900/50 to-black/50 border border-gray-800 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300 group"
-                >
-                  <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 group-hover:scale-110 transition-transform duration-300">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-400 mt-1">{stat.label}</div>
-                </div>
-              ))}
+              <StatCard value={50} suffix="+" label="Projects" isInView={isInView} />
+              <StatCard value={4} suffix="+" label="Month Exp" isInView={isInView} />
+              <StatCard value={100} suffix="%" label="Satisfaction" isInView={isInView} />
             </motion.div>
 
             {/* CTA Buttons */}
@@ -409,6 +421,18 @@ const developer = {
           transition={{ duration: 0.1 }}
         />
       </div>
+    </div>
+  );
+};
+
+const StatCard = ({ value, suffix, label, isInView }) => {
+  const count = useCountUp(value, 2000, isInView);
+  return (
+    <div className="p-4 rounded-xl bg-gradient-to-b from-gray-900/50 to-black/50 border border-gray-800 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300 group">
+      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 group-hover:scale-110 transition-transform duration-300">
+        {count}{suffix}
+      </div>
+      <div className="text-sm text-gray-400 mt-1">{label}</div>
     </div>
   );
 };
